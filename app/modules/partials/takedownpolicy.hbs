@@ -1,0 +1,17 @@
+<!doctype html>
+<html class="nojs">
+<head>{{> head }}</head>
+<body data-app="{{appUrl}}" data-appRoot="{{appRoot}}" class="{{bodyClass}}" data-script='{ "js" : [ "commons.js" ] }'>
+  {{> header }}
+  <main class="main container-fluid" role="main">
+  <h2  class="page-title">{{{title}}}</h2>  
+    {{#content}}
+      {{#main}}
+        <div class="maintext {{class}}" >{{{html}}}</div>
+      {{/main}}
+    {{/content}}
+  </main>
+  {{> footer }}
+  {{{ closure }}}  
+</body>
+</html>

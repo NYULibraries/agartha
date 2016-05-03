@@ -1,0 +1,30 @@
+<div class="item-list flex-container">
+  {{#items}}
+  <article class="item" {{#if score}}data-score="{{{score}}}"{{/if}}>
+    <div class="card">
+      <div class="thumbs"><div class="clipper"><a href="{{../app.appRoot}}/books/{{ss_identifer}}"><img src="{{zs_image_220wide}}" alt="" title="{{title}}"/></a></div></div>
+      <h1 class="md_title"><a href="{{../app.appRoot}}/books/{{ss_identifer}}">{{{ss_title}}}</a></h1>
+      <div class="md_author">{{#each sm_author}}<span>{{this}}</span>{{/each}}</div>
+      <div class="md_series"><span class="md_label">Series:</span>
+      {{#each zm_series_data}}      
+        {{#json this}}
+          <a class="md_series_each" href="{{../../../app.appRoot}}/series/{{#speakingurl}}{{label}}{{/speakingurl}}">{{label}}{{#if volume}} v. {{volume}}{{/if}}</a>
+        {{/json}}
+      {{/each}}
+      </div>
+      <div class="md_publisher"><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}, {{#each sm_field_publication_location}}<span>{{this}}</span>{{/each}}, {{ss_pubdate}}</div>
+      <div class="md_provider"><span class="md_label">Provider:</span> {{#each sm_partner}}<span>{{this}}</span>{{/each}}</div>
+      <div class="md_subjects">
+        <span class="md_label">Subjects:</span> 
+        {{#each zm_subject}}
+          {{#json this}}
+            <a class="md_subject" href="{{../../../app.appRoot}}/subjects/{{tid}}">{{name}}</a>
+          {{/json}}
+        {{/each}}
+      </div>
+    </div>
+  </article>
+  {{/items}}
+  <article class="item"></article>
+  <article class="item"></article>
+</div>

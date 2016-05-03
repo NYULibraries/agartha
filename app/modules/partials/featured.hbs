@@ -1,0 +1,71 @@
+{{#content}}
+  {{#featured}}
+    <div id="{{id}}" class="noFouc tabHolder">
+      <ul>
+        {{#raw}}<li><h3><a href="#{{label}}">{{#widget}}{{title}}{{/widget}}</a></h3></li>{{/raw}}
+        {{#../..}}
+          {{#widgets}}
+            {{#awdlAtlas}}
+              <li><h3><a href="#{{id}}">{{title}}</a></h3></li>
+            {{/awdlAtlas}}
+          {{/widgets}}
+        {{/../..}}
+      </ul>
+      <div class="tabContentHolder">
+        {{#raw}}
+          <div id="{{label}}">
+            <h3> {{#widget}}{{title}}{{/widget}}</h3>
+            <div class="item-list flex-container">
+              {{#data}}
+                {{#response}}
+                  {{#docs}}
+                    <article class="item" {{#if score}}data-score="{{{score}}}"{{/if}}>
+                      <div class="card">
+                        <div class="thumbs">
+                          <div class="clipper"><a href="{{../../../../../../appRoot}}/books/{{ss_identifer}}"><img src="{{zs_image_medium}}" alt="" title="{{title}}"/></a></div>
+                        </div>
+                      <h1 class="md_title"><a href="{{../../../../../../appRoot}}/books/{{ss_identifer}}">{{{ss_title}}}</a></h1>
+                      <div class="md_author">{{#each sm_author}}<span>{{this}}</span>{{/each}}</div>         
+                      {{#if zm_series_data}}
+                      <div class="md_series">
+                      <span class="md_label">Series:</span>
+                      {{#each zm_series_data}}
+                        {{#json this}}
+                          <a class="md_series_each" href="{{../../../../../../../../../appRoot}}/series/{{#speakingurl}}{{label}}{{/speakingurl}}">{{label}}{{#if volume}} v. {{volume}}{{/if}}</a>
+                        {{/json}}
+                      {{/each}}</div>
+                      {{/if}}                   
+                      <div class="md_publisher"><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}, {{#each sm_field_publication_location}}<span>{{this}}</span>{{/each}}, {{ss_pubdate}}</div>
+                      <div class="md_provider"><span class="md_label">Provider:</span> {{#each sm_partner}}<span>{{this}}</span>{{/each}}</div>
+                      <div class="md_subjects"><span class="md_label">Subjects:</span> 
+                      {{#each zm_subject}}
+                        {{#json this}}
+                          <a class="md_subject" href="{{../../../../../../../../appRoot}}/subjects/{{tid}}">{{name}}</a>
+                        {{/json}}
+                      {{/each}}
+                      </div>
+                    </div>  
+                    </article>             
+                  {{/docs}}
+                {{/response}}
+              {{/data}}
+            <article class="item"></article>
+            <article class="item"></article>
+          </div>
+        </div>
+        {{/raw}}
+        {{#../..}}
+          {{#widgets}}
+            {{#awdlAtlas}}
+              <div id="{{id}}">
+                 <h3>{{title}}</h3>
+                <iframe  height="500" width="500" style="width: 100%; height: 500px;" scrolling="no" frameborder="no" src="{{{source}}}" allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+              </div>
+            {{/awdlAtlas}}
+          {{/widgets}}
+        {{/../..}}        
+        
+      </div>
+    </div>
+  {{/featured}}
+{{/content}}

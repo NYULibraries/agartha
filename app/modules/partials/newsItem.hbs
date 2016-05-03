@@ -1,0 +1,21 @@
+<aside class="item newsitem" role="complementary">
+  {{#news}}
+    {{#newsItem}}
+      {{#data}}
+        <h3><a href="{{link}}" target="_blank">{{title}}</a></h3> 
+        {{#items}}
+          <div class="content">
+            <div class="thumbs">
+              <div class="clipper">
+                <a href="{{link}}"><img src="images/blog_thumb.jpg"></a>
+              </div>
+            </div>
+            <h4><a href="{{link}}">{{title}}</a></h4>
+            <time datetime="{{dc:date}}">{{date}}</time>
+            <div class="description">{{description}}</div>
+          </div>
+        {{/items}}
+      {{/data}}
+    {{/newsItem}}
+  {{/news}}
+</aside>

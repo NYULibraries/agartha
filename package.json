@@ -1,0 +1,39 @@
+{
+  "name": "agartha",
+  "description": "Agartha site generator",
+  "version": "1.0.1",
+  "author": "Alberto Ortiz Flores <dismorfo@gmail.com>",
+  "contributors": [
+    "Alberto Ortiz Flores <dismorfo@gmail.com>"
+  ],
+  "keywords": [ "agartha", "framework", "web", "app", "api" ],
+  "repository": "NYULibraries/agartha.js",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "2.7.1",
+    "mkdirp": "0.5.1",
+    "sorted-object": "1.0.0",
+    "grunt": "^0.4.5"
+  },
+  "main": "bin/agartha",
+  "preferGlobal": true,
+  "bin": {
+    "agartha": "./bin/agartha"
+  },
+  "devDependencies": {
+    "grunt-run-grunt": "^0.1.4",
+    "ncp": "^2.0.0",
+    "node-sass": "^3.4.2"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  },
+  "files": [
+    "bin/",
+    "templates/"
+  ],
+  "scripts": {
+    "test": "mocha --reporter spec --bail --check-leaks test/",
+    "test-ci": "mocha --reporter spec --check-leaks test/"
+  }
+}

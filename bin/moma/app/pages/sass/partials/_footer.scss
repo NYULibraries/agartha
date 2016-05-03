@@ -1,0 +1,45 @@
+.footer-main.container-fluid {
+  margin: 90px auto 40px;
+  box-shadow: 0px -1px 0px 0px #DECCBF;
+  border-top: 1px solid #FFFFFF;
+  text-align: center;
+  padding-top: 40px;
+  .credits {
+    float: none;
+    clear: both;
+    text-transform: uppercase;
+    // screen smart book
+    font-family: 'Gotham SSm 4r', 'Gotham SSm A', 'Gotham SSm B', Helvetica, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: .9em;
+    font-size: .9rem;
+    line-height: 1.5;
+    padding-top: 5px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+  .logo-hold {
+    margin: 0 auto;
+  }
+  .logo {
+    display: inline-block;
+    margin: 0 30px 30px;
+    line-height: 1;
+    width: auto;
+    height: 40px;
+    a {
+      display: block;
+      width: auto;
+      height: 100%;
+    }
+    img {
+      width: auto;
+      height: 100%;
+    }
+    @media (max-width: 400px) {
+      margin: 0 0px 30px;
+      width: 100%;
+    }
+  }
+}

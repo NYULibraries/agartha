@@ -1,0 +1,19 @@
+{
+  "about": {
+    "title": "About",
+    "menu": [{
+      "context": "navbar",
+      "label": "About",
+      "weight": 1
+    }],
+    "route": "/index.html",
+    "bodyClass": "front",
+    "content": {
+      "intro": {
+        "title": "Welcome!",
+        "class": "col-l",
+        "html": "<p>This is a test</p>"
+      }
+    }
+  }
+}
