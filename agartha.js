@@ -15,7 +15,7 @@ function create(app_name, app_path, relic) {
   var fs = require('fs');
   var path = require('path');
   var ncp = require('ncp').ncp;
-  var wait = 4;
+  var wait = 3;
   relic = relic || 'generic';
   console.log();
   function complete() {
@@ -43,15 +43,12 @@ function create(app_name, app_path, relic) {
            write(path.join(app_path, file), fs.readFileSync(path.join(__dirname, 'app/includes', file), 'utf-8'));
          });
        });
-       mkdir(path.join(app_path, 'app/pages'), function() {
-         ncp(path.join(__dirname, 'app/relics', relic), path.join(app_path, 'app/pages'), function (err) {
+       mkdir(path.join(app_path, 'app'), function() {
+         ncp(path.join(__dirname, 'app/relics', relic), path.join(app_path, 'app'), function (err) {
            if (err) {
              return console.error(err);
            }
          });
-         complete();
-       });
-       mkdir(path.join(app_path, 'app/configs'), function() {
          complete();
        });
        complete();
