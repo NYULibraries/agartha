@@ -1,84 +1,72 @@
-function series_pages ( callback , options ) {
+function series_pages(data) {
 
-  var _ = require('underscore') ;
+  var agartha = require('agartha').agartha;
 
-  var request = require('request') ;
-  
+  // https://github.com/pid/speakingurl
   var getSlug = require('speakingurl');
 
-  var fs = require('fs') ;
-  
+  // https://github.com/mdevils/node-html-entities
   var Entities = require('html-entities').AllHtmlEntities;
-  
+
   var entities = new Entities();
 
-  var conf = JSON.parse( fs.readFileSync ( __dirname + '/conf.json', 'utf8' ) ) ;
-    
-  var environment = options.parent_conf.environment ;
-  
-  var x = '?wt=json&fl=*&fq=bundle:dlts_series&sm_collection_code:awdl&rows=1000' ;
-  
-  if ( environment !== 'production' ) environment = '*' ;
-    
-    var template = __dirname + '/series_pages.mustache' ;
-    
-    var src = conf[environment].request.series.src + x; 
-    
-    var data = {} ;
-    
-    request ( src , function ( error, response, body ) {
-      if ( ! error && response.statusCode == 200 ) {
-        
-    	  var series = JSON.parse( body ) ;
-        
-        _.each ( series.response.docs , function ( doc ) {
+  var collectionCode = agartha.get('collectionCode');
 
-          var sources , sources_length ;
-          
-          var identifier = doc.ss_identifier ;
-          
-          /** hardcoded AWDL here for now */
-          if ( ! _.has ( data, identifier ) && doc.bs_status && _.contains( doc.sm_series_code, 'awdl' ) ) {
+  var discovery = agartha.get('datasource').discovery.url;
 
-            if ( conf.page ) data[identifier] = conf.page ;
+  data.content.items.datasource = discovery;
 
-            data[identifier].data = JSON.parse( doc.zs_data ) ;
+  data.nodes = {};
 
-            data[identifier].label = doc.label ;
+  /** Source URL template */
+  // We request all nodes that are type (bundle: https://www.drupal.org/node/1261744) dlts_series
+  // and match the collection code of this project. By default we sort by ss_series_label
+  var compiled = agartha._.template("<%=discovery%>?wt=json&fl=*&fq=bundle:dlts_series&fq=sm_series_code:<%=collectionCode%>&rows=1000&hl=off");
 
-            data[identifier].identifier = doc.ss_identifier ;              	
+  // Use http://underscorejs.org/#template to render the URL that we will use to request data
+  var src = compiled({ collectionCode : collectionCode, discovery : discovery });
 
-            data[identifier].hash = doc.hash ;
+  agartha.request(src, (error, response, body) => {
+    if (error) return;
+    var datasource = JSON.parse(body);
+    var documents = datasource.response.docs;
 
-            data[identifier].series_code = doc.sm_series_code ;  
-            
-            data[identifier].sources = [] ;
+    var filters = data.content.items.fq;
 
-            if ( data[identifier].content ) {
+    agartha._.each(documents , function(doc) {
+      var node = {};
+      var identifier = doc.ss_identifier;
+      if (
+        !agartha._.has(data, identifier) &&
+        doc.bs_status &&
+        agartha._.contains(doc.sm_series_code, collectionCode)
+      ) {
 
-              sources = data[identifier].content.items.sources ;
+        if (!doc.zs_data) return;
 
-              sources_length = data[identifier].content.items.sources.length ;
+        data.content.top.title = doc.label;
 
-              for ( var i = 0; i < sources_length; i++ ) {
-                data[identifier].sources.push( { 'src' : conf[environment].sources[sources[i]], 'source' : sources[i] } ) ;  
-              }
-              
-              data[identifier].content.items.identifier = doc.ss_identifier ;
+        node.data = JSON.parse(doc.zs_data);
 
-              _.extend( data[identifier].content.items.fq , [ 
-                { 'filter' : 'sm_series_identifier', 'value' : doc.ss_identifier } ,
-                { 'filter' : 'is_ispartof_series', 'value' : 1 }
-              ] ) ;
-              
-              callback ( { route: '/series/' + getSlug ( entities.decode ( data[identifier].label ) ) + '/index.html', template: template, data: data[identifier] } ) ;              
+        node.label = doc.label;
 
-            }
-          }
-        });
+        node.hash = doc.hash;
+
+        node.identifier = doc.ss_identifier;
+
+        node.series_code = doc.sm_series_code;
+
+        data.content.items.fq = agartha._.union(filters, [ { 'filter' : 'sm_series_identifier', 'value' : doc.ss_identifier }, { 'filter' : 'is_ispartof_series', 'value' : 1 } ]);
+
+        data.content.node = node;
+
+        data.route = '/series/' + getSlug(entities.decode(node.label)) + '/index.html';
+
+        agartha.emit('task.done', data);
+
       }
     });
-
+  });
 }
 
 exports.series_pages = series_pages;

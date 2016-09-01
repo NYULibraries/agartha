@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-  <head>{{> head }}</head>
+  <head>{{>head}}</head>
   <body data-app="{{appUrl}}" data-appRoot="{{appRoot}}" class="{{bodyClass}}">
     {{> header }}
 	<main class="main container-fluid" role="main" data-tid="{{tid}}">
@@ -10,7 +10,7 @@
 	  <div>
 	  <ul>
         {{#terms}}<li><a href="{{ ../appUrl }}/subjects/{{tid}}">{{label}}</a></li>{{/terms}}
-      </ul>	  
+      </ul>
 	  </div>
     </main>
     {{> footer }}

@@ -1,8 +1,8 @@
 <!doctype html>
-<html class="nojs">
-<head>{{> head }}</head>
-<body data-app="{{appUrl}}" data-appRoot="{{appRoot}}" class="{{bodyClass}}" data-script='{ "js" : [ "commons.js" ] }'>
-  {{> header }}  
+<html>
+<head>{{>head}}</head>
+<body id="{{id}}" data-app="{{appUrl}}" data-appRoot="{{appRoot}}">
+  {{>header}}
   <div class="container-fluid">
     <div class="flex-container">
       {{#content}}
@@ -24,7 +24,7 @@
       {{/content}}
     </div>
   </div>
-  {{> footer }}
-  {{{ closure }}}  
+  {{>footer}}
+  {{{closure}}}
 </body>
 </html>

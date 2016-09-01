@@ -1,39 +1,62 @@
-function providers_pages(callback , options) {
-  var _ = require('underscore');
-  var request = require('request');
-  var fs = require('fs') ;
-  var conf = JSON.parse(fs.readFileSync(__dirname + '/conf.json', 'utf8'));
-  var environment = options.parent_conf.environment;
-  if (environment !== 'production') environment = '*';    
-    var template = __dirname + '/providers_pages.mustache' ;
-    if (conf.page) data = conf.page ;
-    if (data.content) {
-      data.sources = [];
-      var sources = data.content.items.sources;
-      var sources_length = data.content.items.sources.length;
-      for ( var i = 0; i < sources_length; i++ ) {
-        data.sources.push({ 'src' : conf[environment].sources[sources[i]], 'source' : sources[i]});  
-      }
-    }
-    request(conf[environment].request.drupal_providers.src, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var drupal_providers = JSON.parse(body);
-        var length = drupal_providers.length;
-        var drupal_terms = [];
-        var i = 0;
-        for (i; i < length; i++) {
-          drupal_terms[drupal_providers[i].raw_value] = drupal_providers[i];
-      	  data.tid = drupal_providers[i].raw_value;
-      	  data.label = drupal_providers[i].value;
-      	  callback ({
-            route: '/providers/' + drupal_providers[i].raw_value + '/index.html',
-            template: template,
-            data: data
-          });
+function providers_pages (data) {
+
+  'use strict';
+
+  const agartha = require('agartha').agartha;
+
+  const collectionCode = agartha.get('collectionCode');
+
+  const datasource = agartha.get('datasource');
+
+  const discovery = datasource.discovery.url;
+
+  const viewer = datasource.viewer.url;
+
+  const partner_label_url = discovery + '?wt=json&fq=sm_collection_code:<%=collectionCode%>&rows=0&facet=true&facet.field=sm_collection_partner_label';
+
+  const partner_url = viewer + '/sources/field/field_partner';
+
+  var terms = [];
+
+  data.content.items.datasource = discovery;
+
+  /** Use Viewer's API endpoint to collect partners */
+  /** Example: http://stage-dl-pa.home.nyu.edu/viewer/sources/field/field_subject */
+  agartha.request(partner_url, (error, response, source) => {
+    if (error) return;
+    const documents = JSON.parse(source);
+    agartha._.each(documents, (document) => {
+      terms.push({'label' : document.value, 'nid' : document.raw_value});
+    });
+    agartha.request(partner_label_url, (error, response, source) => {
+      if (error) return;
+      const documents = JSON.parse(source);
+      const labels = documents.facet_counts.facet_fields.sm_collection_partner_label;
+      const count = labels.length;
+      const filters = data.content.items.fq;
+      var destination = [];
+      agartha._.each(labels, (label, index) => {
+        const eq = ((index + 1) % 2);
+        var provider;
+        // Apache Solr facets in response are list as [ value, count, ... ]
+        // check if index it's the label
+        if (eq === 1) {
+          // only accpet facets with results
+          if (labels[index+1] > 0) {
+            provider = agartha._.findWhere(terms, {label: label});
+            data.route = '/providers/' + provider.nid + '/index.html',
+            data.content.top.label = provider.label;
+            data.title = provider.label;
+            /** Add to the filters the subjects field */
+            destination = [ { "filter": "im_field_partner", "value": provider.nid } ];
+            data.content.items.fq = destination.concat(filters);
+            agartha.emit('task.done', data);
+          }
         }
-      }
-    }
-  );
+      });
+    });
+  });
+
 }
 
 exports.providers_pages = providers_pages;

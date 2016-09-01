@@ -6,142 +6,118 @@
  * Licensed under the MIT license.
  */
 
-var grunt = require('grunt');
-var path = require('path');
+const fs = require('fs');
 
-function htmlminify () {
-  var htmlminifyConfiguration = {}
-  var htmlminifyConfigurationFile = __dirname + '/source/json/htmlminify.json'
-  if (grunt.file.isFile(htmlminifyConfigurationFile)) {
-    htmlminifyConfiguration = grunt.file.readJSON(htmlminifyConfigurationFile)
-    htmlminifyConfiguration = htmlminifyConfiguration.htmlminify
+const path = require('path');
+
+const _ = require('underscore');
+
+function exists (filepath) {
+   try {
+     if (fs.accessSync(filepath, fs.F_OK)) {
+       return true;
+     }
+   }
+   catch (e) {
+     return false;
+   }
+ }
+
+function get (option) {
+  const filepath = path.join(process.cwd(), 'project.json');
+  if (exists(filepath)) {
+    const project = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
+    if (_.isUndefined(option)) {
+      return project;
+    }
+    else {
+      if (_.has(project, option)) {
+        return project[option];
+      }
+    }
   }
-  return htmlminifyConfiguration
 }
 
-function curl () {
-  if ( grunt.file.isFile( __dirname + '/source/json/curl.json' ) ) {
-	var curlConfiguration = grunt.file.readJSON( __dirname + '/source/json/curl.json' ) ;
-	return curlConfiguration.curl ;
+function htmlminify () {
+  const filepath = path.join(process.cwd(), 'htmlminify.json');
+  var configuration = {};
+  if (exists(filepath)) {
+    configuration = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
   }
+  return configuration;
 }
 
 function js () {
-
   var js_conf;
-
-  if ( grunt.file.isFile( __dirname + '/source/json/js.json' ) ) {
-	js_conf = grunt.file.readJSON( __dirname + '/source/json/js.json' ) ;
-  }
-
-  else {
+  //if ( grunt.file.isFile( __dirname + '/source/json/js.json' ) ) {
+	  //js_conf = grunt.file.readJSON( __dirname + '/source/json/js.json' ) ;
+  //}
+  //else {
     // default JS configuration
     js_conf = {
       js : {
         build : "external", // options: inline,  external
         style : "expanded" // options: compressed, expanded
-	  }
+	    }
     };
-  }
 
-  return js_conf ;
+  //}
 
+  js_conf.template = {
+    inline   : '<script data-timespan="<%= now %>"><%= src %></script>',
+    external : '<script src="<%= src %>?n<%= now %>" defer></script>'
+  };
+  return js_conf;
 }
 
 /** merge with compass */
 function sass () {
 
-  var sass_conf;
+  // see: http://stackoverflow.com/questions/31148803/injecting-variables-during-sass-compilation-with-node
 
-  if ( grunt.file.isFile( __dirname + '/source/json/sass.json' ) ) {
-    sass_conf = grunt.file.readJSON( __dirname + '/source/json/sass.json' ) ;
+  const filepath = path.join(process.cwd(), 'sass.json');
+
+  var configuration = {};
+
+  if (exists(filepath)) {
+    configuration = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
   }
   else {
+    configuration =  {
+    	dist: {
+    	  options: {
+          basePath : get('appUrl'),
+          sassDir : path.join(process.cwd(), 'app/sass'),
+          outputStyle : 'expanded',
+          imagesDir : path.join('images'),
+          javascriptsDir : path.join('js'),
+          cssDir : path.join('css'),
+          httpPath: ''
+        }
+      }
+    }
+  }
+
 	// default SASS configuration
-    sass_conf = {
+  sass_conf = {
       sass : {
         build : "external", // options: inline,  external
 	    // build : "external", // options: inline,  external
 	    // for options; see: https://github.com/gruntjs/grunt-contrib-sass
 	    options : {
-          style : "expanded", // options: nested, compact, compressed, expanded
-          debugInfo : false,
-          lineNumbers : true,
-          trace: false
-        }
+        style : "expanded", // options: nested, compact, compressed, expanded
+        debugInfo : false,
+        lineNumbers : true,
+        trace: false
       }
-    };
-  }
-
+    }
+  };
   return {
     dist: {
       options: sass_conf.sass.options,
       files: { 'build/css/style.css': __dirname + '/source/sass/style.scss' },
       build : sass_conf.sass.build
     }
-  } ;
-
-}
-
-function compass() {
-  // var projectConfiguration = project () ;
-  // outputStyle: nested, expanded, compact, compressed
-  // noLineComments: true, false
-  // httpPath: String , default to "/"
-  // var compass_conf;
-  //if ( grunt.file.isFile ( __dirname + '/source/json/compass.json' ) ) {
-    //compass_conf = grunt.file.readJSON ( __dirname + '/source/json/compass.json' ) ;
-  //}
-  return {
-	  dist: {
-	    options: {
-        basePath : process.cwd(),
-        sassDir : path.join(process.cwd(), 'app/craft/relics/generic/sass'), // _dirname + '/source/sass',
-        outputStyle : 'expanded',
-        imagesDir : 'images',
-        javascriptsDir : 'js',
-        cssDir : path.join(process.cwd(), 'build/css'),
-        //httpPath: projectConfiguration.appRoot
-        httpPath : ''
-      }
-    }
-  }
-}
-
-function copy () {
-  return {
-    main: {
-      expand: true,
-      cwd: 'source/images',
-      src: '**/*',
-      dest: 'build/images',
-    }
-  };
-}
-
-function clean () {
-  return [
-    __dirname + '/build/*',
-    __dirname + '/source/json/datasources/*.json'
-  ];
-}
-
-function watch () {
-  return {
-    files: [
-      __dirname + '/source/js/*.js',
-      __dirname + '/source/json/*.json',
-      __dirname + '/source/sass/*.scss',
-      __dirname + '/source/views/*.mustache',
-      __dirname + '/source/views/*.hbs'
-    ],
-    tasks: [
-      'clean',
-      'copy',
-      'uglify',
-      'compass',
-      'writeHTML'
-    ]
   };
 }
 
@@ -168,12 +144,7 @@ function uglify () {
   };
 }
 
-exports.curl = curl;
+//exports.uglify = uglify;
 exports.sass = sass;
-exports.copy = copy;
-exports.clean = clean;
-exports.watch = watch;
-exports.uglify = uglify;
 exports.js = js;
-exports.compass = compass;
 exports.htmlminify = htmlminify;

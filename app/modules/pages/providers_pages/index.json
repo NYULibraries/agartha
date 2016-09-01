@@ -1,31 +1,51 @@
 {
-  "page": {
-    "bodyClass": "providers",
-    "content": {
-      "items": {
-        "sources" : ["discovery"],
-        "rows": 12,
-        "fl": [
-            "*"
-        ],
-        "fq": [
+  "title": "Provider",
+  "route": "/providers/*",
+  "content": {
+    "top" : {
+       "title" : "Provider"
+    },
+    "items": {
+      "datasource": "viewer",
+      "rows": 12,
+      "fl": [
+        "*"
+      ],
+      "fq": [
+        {
+          "filter": "bundle",
+          "value": "dlts_book"
+        }
+      ],
+      "features" : {
+        "filters" : [
           {
-            "filter": "sm_collection_code",
-            "value": "aco"
+            "direction" : "asc",
+            "field" : "iass_longlabel",
+            "label" : "Sorting by Title",
+            "selected" : true
+          },
+          {
+            "direction" : "asc",
+            "field" : "ss_sauthor",
+            "label" : "Sort by Author",
+            "selected" : false
           }
         ]
       }
     }
   },
-  "*" : {
-    "sources" : {
-      "discovery" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select/"
-    },
-    "request" : {
-      "drupal_providers" : {
-        "src" : "http://alpha-user:dlts2010@stage-dl-pa.home.nyu.edu/viewer/sources/field/field_partner",
-        "dest" : "drupal_providers"
+  "assets" : {
+    "js" : [
+        "commons.js"
+      , "speakingurl.js"
+      , "browse.js"
+    ],
+    "hbs" : [
+      {
+        "template" : "items.hbs",
+        "id" : "items"
       }
-    }
+    ]
   }
 }

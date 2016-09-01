@@ -1,40 +1,44 @@
-function subjects (callback , options) {
-  var _ = require('underscore');
-  var request = require('request');
-  var fs = require('fs') ;
-  var data = {};
-  var conf = JSON.parse( fs.readFileSync ( __dirname + '/conf.json', 'utf8' ) );
-  var environment = options.parent_conf.environment;
-  if ( environment !== 'production' ) environment = '*';  
-  var template = __dirname + '/subjects.mustache' ;
-  if ( conf.page ) {
-  	data = conf.page ;
-  } 
+function subjects (data) {
+
+  const agartha = require('agartha').agartha;
+
+  const collectionCode = agartha.get('collectionCode');
+
+  const subject_url = agartha.get('datasource').viewer.url + '/sources/field/field_subject';
+
+  const discovery_url = agartha.get('datasource').discovery.url + '?wt=json&rows=0&facet=true&facet.field=im_field_subject&fq=sm_collection_code:' + collectionCode;;
+
+  var drupal_terms = [];
+
   data.terms = [];
-  request(conf[environment].request.drupal_subjects.src, function (error, response, body) {
-    if ( !error && response.statusCode == 200 ) {
-      var drupal_subjects = JSON.parse(body);
-      var length = drupal_subjects.length;
-      var drupal_terms = [];
-      for ( var i = 0; i < length; i++ ) {
-        drupal_terms[drupal_subjects[i].raw_value] = drupal_subjects[i];
-      }
-      request(conf[environment].request.subjects.src, function (error, response, body) {
-        if ( !error && response.statusCode == 200 ) {
-          var subjects = JSON.parse(body);
-          _.each ( subjects.facet_counts.facet_fields.im_field_subject , function (doc, index) {
-            /** Apache Solr response includes the values and the count of the values in pairs */
-            if ( ( index + 1 ) % 2 && drupal_terms[doc] ) data.terms.push({tid:doc, label : drupal_terms[doc].value}); 
-          });
-          callback ( {
-            route: '/subjects/index.html',
-            template: template,
-            data: data
-          } ) ;          
+
+  /** we need the list of Drupal 7 subjects */
+  /** we use Viewer's API endpoint to collect this information */
+  /** Example: http://stage-dl-pa.home.nyu.edu/viewer/sources/field/field_subject */
+  agartha.request(subject_url, (error, response, body) => {
+    if (error) return;
+    var i = 0;
+    const drupal_subjects = JSON.parse(body);
+    const length = drupal_subjects.length;
+    for (i; i < length; i++) {
+      drupal_terms.push(drupal_subjects[i]);
+    }
+    agartha.request(discovery_url, (error, response, body) => {
+      if (error) return;
+      const subjects = JSON.parse(body);
+      /** Apache Solr response includes the values and the count of the values in pairs */
+      agartha._.each(subjects.facet_counts.facet_fields.im_field_subject, (doc, index) => {
+        if ((index + 1) % 2) {
+          const term = agartha._.findWhere(drupal_terms, { raw_value: doc});
+          if (term) {
+            data.terms.push({ 'tid' : term.raw_value , 'label' : term.value });
+          }
         }
       });
-    }
+      agartha.emit('task.done', data);
+    });
   });
+
 }
 
 exports.subjects = subjects;

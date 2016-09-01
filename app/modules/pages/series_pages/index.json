@@ -1,37 +1,23 @@
 {
-
-  "page": {
-    "bodyClass": "series_page",
-    "content": {
-      "items": {
-        "sources" : [ "discovery" ] ,
-        "rows": 12,
-        "fl": [
-            "*"
-        ],
-        "fq": [
-          { "filter": "sm_collection_code", "value": "aco" }
-        ]
+  "id" : "seriespage",
+  "title" : "Series page",
+  "route" : "/series/*",
+  "htaccess" : false,
+  "assets" : {
+    "js" : [
+        "commons.js"
+      , "speakingurl.js"
+      , "items.js"
+    ],
+    "hbs" : [
+      {
+        "template" : "items.hbs",
+        "id" : "items"
       }
-    }
+    ]
   },
-  
-  "production" : {
-    "request" : {
-      "src" : "http://discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
-      "dest" : "series_pages.json"
-    }
-  },
-  
-  "*" : {
-    "request" : {
-      "series" : {
-        "src" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select",
-        "dest" : "series_pages.json"
-      }
-    },
-    "sources" : {
-      "discovery" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/core0/select/"
-    }
+  "datasource" : {
+    "viewer" : "viewer",
+    "discovery" : "discovery"
   }
 }

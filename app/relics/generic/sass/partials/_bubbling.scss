@@ -1,3 +1,7 @@
+
+$color-light: #ECDCC8;
+$color-dark: #ECDCC8;
+
 .bubblingG {
     text-align: center;
     width: 80px;
@@ -10,7 +14,7 @@
     width: 10px;
     height: 10px;
     margin: 25px auto;
-    background: #27205a;
+    background: $color-light;
     -moz-border-radius: 50px;
     -moz-animation: bubblingG 1.3s infinite alternate;
     -webkit-border-radius: 50px;
@@ -51,14 +55,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #27205a;
+        background-color: $color-light;
         -moz-transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #f9f1e7;
+        background-color: $color-dark;
         -moz-transform: translateY(-21px);
     }
 }
@@ -67,14 +71,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #27205a;
+        background-color: $color-light;
         -webkit-transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #f9f1e7;
+        background-color: $color-dark;
         -webkit-transform: translateY(-21px);
     }
 }
@@ -83,14 +87,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #27205a;
+        background-color: $color-light;
         -ms-transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #f9f1e7;
+        background-color: $color-dark;
         -ms-transform: translateY(-21px);
     }
 }
@@ -99,14 +103,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #27205a;
+        background-color: $color-light;
         -o-transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #f9f1e7;
+        background-color: $color-dark;
         -o-transform: translateY(-21px);
     }
 }
@@ -115,14 +119,14 @@
     0% {
         width: 10px;
         height: 10px;
-        background-color: #27205a;
+        background-color: $color-light;
         transform: translateY(0);
     }
 
     100% {
         width: 24px;
         height: 24px;
-        background-color: #f9f1e7;
+        background-color: $color-dark;
         transform: translateY(-21px);
     }
 }

@@ -1,31 +1,50 @@
 {
-  "page": {
-    "bodyClass": "subjects",
-    "content": {
-      "items": {
-        "sources" : ["discovery"],
-        "rows": 12,
-        "fl": [
-            "*"
-        ],
-        "fq": [
+  "id" : "subjects-pages",
+  "title": "Subjects",
+  "route": "/subjects/*",
+  "content": {
+    "top" : {
+       "title" : "Subjects"
+    },
+    "items": {
+      "datasource": "discovery",
+      "rows": 12,
+      "fl": [ "*" ],
+      "fq": [
           {
-            "filter": "sm_collection_code",
-            "value": "aco"
+            "filter": "bundle",
+            "value": "dlts_book"
+          }
+        ],
+      "features" : {
+        "filters" : [
+          {
+            "direction" : "asc",
+            "field" : "iass_longlabel",
+            "label" : "Sorting by Title",
+            "selected" : true
+          },
+          {
+            "direction" : "asc",
+            "field" : "ss_sauthor",
+            "label" : "Sort by Author",
+            "selected" : false
           }
         ]
       }
     }
   },
-  "*" : {
-    "sources" : {
-      "discovery" : "http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select/"
-    },
-    "request" : {
-      "drupal_subjects" : {
-        "src" : "http://alpha-user:dlts2010@stage-dl-pa.home.nyu.edu/viewer/sources/field/field_subject",
-        "dest" : "drupal_subjects"
+  "assets" : {
+    "js" : [
+        "commons.js"
+      , "speakingurl.js"
+      , "subjects_pages.js"
+    ],
+    "hbs" : [
+      {
+        "template" : "items.hbs",
+        "id" : "items"
       }
-    }
+    ]
   }
 }

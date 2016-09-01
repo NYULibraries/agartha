@@ -1,0 +1,66 @@
+h1.sitename {
+  font-style: normal;
+  letter-spacing: .5px;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  text-align: left;
+}
+
+h2.page-title {
+  margin: 1.5em 0 .75em;
+  font-size: 2em;
+}
+
+.container-fluid {
+  max-width: 990px;
+  width: 990px;
+}
+
+.maintext {
+  margin-bottom: 40px;
+}
+
+.credits {
+  border-top: 1px solid gray;
+  padding-top: 20px;
+  margin-top: 60px;
+  max-width: 700px;
+  width: 700px;
+  text-transform: uppercase;
+}
+
+.footer-main {
+  .logo {
+    float: left;
+    margin-bottom: 0px;
+    line-height: 1;
+    width: auto;
+    height: 41px;
+    a {
+      display: block;
+      width: auto;
+      height: 100%;
+    }
+  }
+  .partner-wrapper {
+    text-align: right;
+  }
+}
+
+// sticky footer
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 71px;
+}
+
+.footer-wrapper {
+  position: absolute;
+  bottom: 0;
+  height: 71px;
+  width: 100%;
+}
