@@ -1,5 +1,3 @@
-// https://github.com/metalsmith/metalsmith
-
 /**
  * agartha.js
  * https://github.com/NYULibraries/agartha.js
@@ -14,7 +12,7 @@
   * @param {String} path
   */
 
-//'use strict';
+'use strict';
 
 function create (app_name, app_path, relic) {
   const fs = require('fs');
@@ -172,9 +170,9 @@ function write (filename, str, mode) {
  */
 function mkdir (path, fn) {
   const mkdirp = require('mkdirp');
-  mkdirp(path, 0755, function (err) {
+  mkdirp(path, '0755', function (err) {
     if (err) throw err;
-    console.log('   \033[36mcreate\033[0m : ' + path);
+    console.log('   create : ' + path);
     fn && fn();
   });
 }
@@ -186,7 +184,7 @@ function mkdir (path, fn) {
 function forge () {
 
   // custom module
-  const transform = require('transform');
+  const transform = require('./lib/transform');
 
   transform.assets();
 
