@@ -2,12 +2,23 @@
 
 'use strict';
 
-var program = require('commander');
-var path = require('path');
-var readline = require('readline');
 var pkg = require('../package.json');
-var version = pkg.version;
-var _exit = process.exit;
+
+const program = require('commander');
+
+const path = require('path');
+
+const fs = require('fs');
+
+const readline = require('readline');
+
+const version = pkg.version;
+
+const _exit = process.exit;
+
+const ERROR_CODE_ONE = 1;
+
+var agartha = require('../agartha-cli').agartha;
 
 // set process title
 process.title = 'agartha';
@@ -68,29 +79,36 @@ function confirm(msg, callback) {
 /**
  * Graceful exit for async STDIO
  */
-function exit(code) {
+function exit(err, code) {
+  if (err) console.log(err)
+
   // flush output for Node.js Windows pipe bug
   // https://github.com/joyent/node/issues/6247 is just one bug example
   // https://github.com/visionmedia/mocha/issues/333 has a good discussion
   function done() {
     if (!(draining--)) _exit(code);
   }
+
   var draining = 0;
+
   var streams = [process.stdout, process.stderr];
+
   exit.exited = true;
-  streams.forEach(function(stream){
+
+  streams.forEach(function(stream) {
     // submit empty write request and wait for completion
     draining += 1;
     stream.write('', done);
   });
+
   done();
+
 }
 
 /**
  * Main program.
  */
 function main(dir) {
-  var agartha = require('../agartha');
   // do we need to quit?
   if (exit.exited) return;
   // what type of relic will be forge
@@ -125,24 +143,11 @@ function main(dir) {
  * Forge program.
  */
 function forge() {
-  var path = require('path');
-  // do we need to quit?
-  if (exit.exited) return;
-  var fs = require('fs');
-  var agartha = require('../agartha');
-  var project = path.join(process.cwd(), 'project.json');
-  try {
-    fs.access(project, fs.F_OK, (err) => {
-      if (err) {
-        throw new Error(err);
-      }
-      agartha.forge(JSON.parse(fs.readFileSync(project, 'utf8')));
-    });
+  const project = path.join(process.cwd(), 'project.json');
+  if (agartha.exists(project)) {
+    agartha.forge(agartha.read.json(project));
   }
-  catch (e) {
-    // It isn't accessible
-    console.log('Agartha can not forge. Make sure you have project.json in your project.');
-    console.log(e);
-    exit(1);
+  else {
+    exit('Agartha can not forge. Make sure you have project.json in your project.', ERROR_CODE_ONE);
   }
 }
