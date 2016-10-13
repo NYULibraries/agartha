@@ -252,8 +252,10 @@ function get (option) {
 }
 
 const agartha = (function() {
+
   // http://underscorejs.org
   const _ = require('underscore');
+
   if (!_.isObject(process.agartha)) {
     // https://nodejs.org/api/fs.html
     const fs = require('fs');
@@ -267,9 +269,90 @@ const agartha = (function() {
     const request = require('request');
     // https://github.com/felixge/node-dateformat
     const dateformat = require('dateformat');
-
     // track start time
     const timespan = _.now();
+
+    const configurations = {
+      htmlminify: function () {
+        const source = agartha.path.join(agartha.appDir(), 'htmlminify.json');
+        var configurations = {};
+        if (agartha.exists(source)) {
+          configurations = agartha.read.json(source);
+        }
+        return configurations;
+      },
+      js: function () {
+        const source = agartha.path.join(agartha.appDir(), 'js.json');
+        var configurations = {};
+        if (agartha.exists(source)) {
+          configurations = agartha.read.json(source);
+        }
+        else { // default JS configuration
+          configurations = {
+            build : 'external', // options: inline,  external
+            style : 'expanded' // options: compressed, expanded
+          };
+        }
+
+        configurations.template = {
+          inline   : '<script data-timespan="<%= now %>"><%= src %></script>',
+          external : '<script src="<%= src %>?n<%= now %>" defer></script>'
+        };
+
+        return configurations;
+      },
+      sass: function () {
+        const source = agartha.path.join(agartha.appDir(), 'htmlminify.json');
+        var configurations = {};
+        if (agartha.exists(source)) {
+          configurations = agartha.read.json(source);
+        }
+        else { // default SASS configuration
+          configurations = {
+            sass : {
+              build : "external", // options: inline,  external
+     	        // for options; see: https://github.com/gruntjs/grunt-contrib-sass
+     	        options : {
+                style : "expanded", // options: nested, compact, compressed, expanded
+                debugInfo : false,
+                lineNumbers : true,
+                trace: false
+              }
+            }
+          };
+        }
+        return {
+          dist: {
+            options: configurations.sass.options,
+            files: {
+              'build/css/style.css': __dirname + '/source/sass/style.scss'
+            },
+            build: configurations.sass.build
+          }
+        };
+      },
+      uglify: function () {
+       return {
+         options: {
+           banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+           compress: {}, // https://github.com/gruntjs/grunt-contrib-uglify/issues/298#issuecomment-74161370
+           preserveComments: false
+         },
+         my_target: {
+           files: () => {
+             var targets = {};
+             //grunt.file.recurse(__dirname + '/source/js/', function callback (abspath, rootdir, subdir, filename) {
+             //  if ( filename.match('.js') ) {
+             //    var name = filename.replace('.js', '');
+             //    targets['build/js/' + name + '.min.js'] = abspath;
+             //   }
+             //});
+             return targets;
+           }
+         }
+       };
+      }
+    }
     // read files
     const read = {
       // https://github.com/Leonidas-from-XIV/node-xml2js
@@ -296,7 +379,7 @@ const agartha = (function() {
     // export
     process.agartha = {
       _ : _,
-      configurations : require(cwd() + '/configurations'),
+      configurations : configurations,
       relic : function () { return get('relic') },
       appUrl : function () { return get('appUrl') },
       forge : forge,
