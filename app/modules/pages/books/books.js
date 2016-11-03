@@ -102,11 +102,8 @@ YUI().use(
     });
 
     Y.Global.on("crossframe:message", function(o, data) {
-
       var message = JSON.parse(data.message);
-
       Y.fire(message.fire, message.data);
-
     });
 
     widget.on('load', function() {
@@ -125,6 +122,15 @@ YUI().use(
 
       body.removeClass('io-loading');
 
+    });
+    
+    Y.on('change:option:multivolume', function(data) {    
+	    var parts = data.url.split('/');
+	    var route;
+	    if (parts[3]) {
+	    route = '/books/' + parts[3] + '/1';
+	      router.replace(route);
+	    }
     });
 
     resizeBookView();
