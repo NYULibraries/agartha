@@ -7,9 +7,7 @@ YUI().use(
   'router',
   'gallery-paginator',
   'anim', function (Y) {
-
   'use strict';
-
   function a () {
     return `
     <div class="item-list flex-container">
@@ -131,26 +129,21 @@ YUI().use(
     });
   });
 
-  function onSelectChange() {
-
-    //var t2;
-
-    Y.all('#browse-select option').each(function(node) {
-      /* reset all option text */
-      //var t = node.get("text");
-      //t = t.replace("Sorting by", "Sort by");
-      //node.set("text", t);
-      Y.log(node);
-      
+  function onSelectChange(event) {
+    var currentTarget = event.currentTarget;
+    var currentValue = currentTarget.get('value');
+    currentTarget.all('option').each(function(node) {
+      var text;
+      var data = node.getData();
+      if (currentValue == node.get('value')) {
+        text = data['label-active'];
+      }
+      else {
+        text = data['label-inactive'];
+      }
+      node.set('text', text);
     });
-
-    //t2 = Y.one("#browse-select option:checked").get("text");
-    //t2 = t2.replace("Sort by", "Sorting by");
-
-    //Y.one("#browse-select option:checked").set("text", t2);
-
     router.replace(getRouteChangedParameters());
-
   }
 
   function onFailure(response, args) {
