@@ -16,7 +16,7 @@
               {{#features}}
                 <select id="browse-select">
                 {{#each filters}}
-                  <option data-sort-dir="{{direction}}" value="{{field}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+                  <option data-label-active="{{labelActive}}" data-label-inactive="{{labelInactive}}" data-sort-dir="{{direction}}" value="{{field}}" {{#if selected}}selected{{/if}}>{{#if selected}}{{labelActive}}{{else}}{{labelInactive}}{{/if}}</option>
                 {{/each}}
               {{/features}}
             </select>

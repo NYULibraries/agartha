@@ -31,7 +31,7 @@ YUI().use(
             <a class="md_series_each" href="{{../../../app.appRoot}}/series/{{#speakingurl}}{{label}}{{/speakingurl}}">{{label}}{{#if volume}} v. {{volume}}{{/if}}</a>
           {{/json}}
         {{/each}}
-        </div>        
+        </div>
         <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}</div>
         <div><span class="md_label">Place of Publication:</span> {{ss_publocation}}</div>
         <div><span class="md_label">Date of Publication:</span> {{ss_pubdate}}</div>
@@ -132,7 +132,25 @@ YUI().use(
   });
 
   function onSelectChange() {
-    router.replace( getRouteChangedParameters() );
+
+    //var t2;
+
+    Y.all('#browse-select option').each(function(node) {
+      /* reset all option text */
+      //var t = node.get("text");
+      //t = t.replace("Sorting by", "Sort by");
+      //node.set("text", t);
+      Y.log(node);
+      
+    });
+
+    //t2 = Y.one("#browse-select option:checked").get("text");
+    //t2 = t2.replace("Sort by", "Sorting by");
+
+    //Y.one("#browse-select option:checked").set("text", t2);
+
+    router.replace(getRouteChangedParameters());
+
   }
 
   function onFailure(response, args) {
