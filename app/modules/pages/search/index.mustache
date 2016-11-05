@@ -11,12 +11,12 @@
       {{#items}}
       <div class="items-widget">
         <div class="top">
-          <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
+          <div class="resultsnum">Showing  <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span> results for <span class="s-query"></span></div>
           <div class="filters">
               {{#features}}
                 <select id="browse-select">
                 {{#each filters}}
-                  <option data-sort-dir="{{direction}}" value="{{field}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+                  <option data-label-active="{{labelActive}}" data-label-inactive="{{labelInactive}}" data-sort-dir="{{direction}}" value="{{field}}" {{#if selected}}selected{{/if}}>{{#if selected}}{{labelActive}}{{else}}{{labelInactive}}{{/if}}</option>
                 {{/each}}
               {{/features}}
             </select>
@@ -32,11 +32,5 @@
   </main>
   {{>footer}}
   {{{closure}}}
-  <div id="noresults">
-    <div class="col">
-      <p>Sorry, no results found.</p>
-      <p>Try a different term.</p>
-    </div>
-  </div>
 </body>
 </html>
