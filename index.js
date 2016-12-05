@@ -1,8 +1,14 @@
-#!/usr/bin/env node
+/**
+ * agartha.js
+ * https://github.com/NYULibraries/agartha.js
+ *
+ * Copyright (c) 2014 New York University, contributors
+ * Licensed under the MIT license.
+ */
 
 'use strict';
 
-const pkg = require('package.json');
+const pkg = require('./package.json');
 
 const program = require('commander');
 
@@ -40,16 +46,16 @@ program
   .action(main);
 
 program
-    .command('forge')
-    .description('Forge a relic')
-    .action(forge);
+  .command('forge')
+  .description('Forge a relic')
+  .action(forge);
 
 program
   .parse(process.argv);
 
 /**
- * Install a before function; AOP.
- */
+* Install a before function; AOP.
+*/
 function before(obj, method, fn) {
   var old = obj[method];
   obj[method] = function () {
@@ -62,14 +68,17 @@ function before(obj, method, fn) {
  * Prompt for confirmation on STDOUT/STDIN
  */
 function confirm(msg, callback) {
+
   var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
   });
-  rl.question(msg, function (input) {
+
+  rl.question(msg, (input) => {
     rl.close();
     callback(/^y|yes|ok|true$/i.test(input));
   });
+
 }
 
 /**
@@ -77,7 +86,9 @@ function confirm(msg, callback) {
  */
 function exit(err, code) {
 
-  if (err) console.log(err);
+  if (err) {
+    console.log(err);
+  }
 
   var draining = 0;
 
@@ -87,7 +98,9 @@ function exit(err, code) {
   // https://github.com/joyent/node/issues/6247 is just one bug example
   // https://github.com/visionmedia/mocha/issues/333 has a good discussion
   function done() {
-    if (!(draining--)) _exit(code);
+    if (!(draining--)) {
+      _exit(code);
+    }
   }
 
   exit.exited = true;
@@ -105,44 +118,56 @@ function exit(err, code) {
 /**
  * Main program.
  */
-function main (dir) {
+function main(dir) {
+
   // do we need to quit?
   if (exit.exited) return;
+
   // what type of relic will be forge
-  var relic = this.relic || 'generic';
+  const relic = this.relic || 'generic';
+
   // app destination
-  var destinationPath = dir || '.';
+  const destinationPath = dir || '.';
+
   // app name
-  var appName = path.basename(path.resolve(destinationPath));
+  const appName = path.basename(path.resolve(destinationPath));
+
   // force creation of app even if destination is not empty
-  var force = this.force || false;
+  const force = this.force || false;
+
+  const agartha = require('agartha').agartha;
+
   // Generate site
-  emptyDirectory(destinationPath, (empty) => {
-    if (empty || force) {
-      create(appName, destinationPath, relic);
-    }
-    else {
-      confirm('destination is not empty, continue? [y/N] ', (ok) => {
-        if (ok) {
-          process.stdin.destroy();
-          application(appName, destinationPath, relic);
-        }
-        else {
-          console.error('aborting');
-          exit(1);
-        }
-      });
-    }
-  });
-}
+   agartha.emptyDirectory(destinationPath, function (empty) {
+     if (empty || force) {
+       agartha.create(appName, destinationPath, relic);
+     }
+     else {
+       confirm('destination is not empty, continue? [y/N] ', function (ok) {
+         if (ok) {
+           process.stdin.destroy();
+           agartha.application(appName, destinationPath, relic);
+         }
+         else {
+           console.error('aborting');
+           exit(1);
+         }
+       });
+     }
+   });
+
+ }
 
 /**
- * Forge program.
- */
+* Forge program.
+*/
 function forge() {
-  const agartha = require('agartha');
-  const project = agartha.path.join(process.cwd(), 'project.json');
-  if (exists(project)) {
+
+  const agartha = require('agartha').agartha;
+
+  const project = path.join(process.cwd(), 'project.json');
+
+  if (agartha.exists(project)) {
     agartha.forge(agartha.read.json(project));
   }
   else {
