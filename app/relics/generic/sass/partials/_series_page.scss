@@ -1,0 +1,23 @@
+body.series, body.collectionsoverview {
+  .item a {
+    display: block;
+    font-weight: normal;
+    font-size: 1.2rem;
+  }
+}
+
+body.about aside {
+  img {
+    width: 100%;
+    height: auto;
+  }
+  .imgHold {
+    width: 100%;
+    @media (max-width: $screen-md) and (min-width : 420px) {
+      width: 40%;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      float: left;
+    }
+  }
+}

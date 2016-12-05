@@ -1,0 +1,22 @@
+.noFouc {
+  opacity: 0;
+}
+
+.nojs {
+  .noFouc {
+    display: none;
+    visibility: hidden;
+  }
+  main.main {
+    display: none;
+  }
+  [role=complementary] {
+    display: none;
+  }
+  body.io-loading .footer-wrapper {
+    clip: auto;
+    width: 100%;
+    height: auto;
+    display:block;
+  }
+}
