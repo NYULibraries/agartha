@@ -19,6 +19,7 @@ function series (data) {
   // Use http://underscorejs.org/#template to render the URL that we will use to request data
   /** Render URL */
   var src = compiled({ collectionCode : collectionCode, discovery : discovery });
+
   agartha.request(src, function(error, response, body) {
     if (!error && response.statusCode == 200) {
       var series = JSON.parse(body);

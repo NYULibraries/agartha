@@ -34,7 +34,9 @@ function series_pages(data) {
     var filters = data.content.items.fq;
 
     agartha._.each(documents , function(doc) {
+
       var node = {};
+
       var identifier = doc.ss_identifier;
       if (
         !agartha._.has(data, identifier) &&
@@ -56,7 +58,7 @@ function series_pages(data) {
 
         node.series_code = doc.sm_series_code;
 
-        data.content.items.fq = agartha._.union(filters, [ { 'filter' : 'sm_series_identifier', 'value' : doc.ss_identifier }, { 'filter' : 'is_ispartof_series', 'value' : 1 } ]);
+        data.content.items.fq = agartha._.union(filters, [ { 'filter' : 'sm_series_identifier', 'value' : doc.ss_identifier }, { 'filter' : 'is_ispartofseries', 'value' : 1 } ]);
 
         data.content.node = node;
 

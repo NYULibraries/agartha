@@ -38,15 +38,21 @@ function providers (data) {
   }
 
   function step3 () {
+
     var url = datasource[data.datasource.discovery].url;
+
     var compiled = agartha._.template("<%=url%>?wt=json&fq=sm_collection_code:<%=collectionCode%>&rows=0&facet=true&facet.field=sm_collection_partner_label");
+
     var src = compiled({ url : url, collectionCode : collectionCode });
+
     /** Use Viewer's API endpoint to collect partners */
     /** Example: http://stage-dl-pa.home.nyu.edu/viewer/sources/field/field_subject */
+    // http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select?wt=json&fq=sm_collection_code:awdl&rows=0&facet=true&facet.field=sm_collection_partner_label
     agartha.request(src, function (error, response, data) {
       if (error) return;
       else agartha.emit('task.step.four', data);
     });
+
   }
 
   function step4 (response) {
@@ -65,6 +71,7 @@ function providers (data) {
       }
     });
     agartha.emit('task.done', data);
+
   }
 
   agartha.on('task.step.one', step1);

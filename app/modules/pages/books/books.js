@@ -18,17 +18,15 @@ YUI().use(
 
     function calculateAvailableHeight() {
 
-      var siblings = widget.siblings();
+      var loaderHeight = 0;
 
       var viewport = Y.DOM.viewportRegion();
 
       var availableHeight = viewport.height;
 
+      var siblings = widget.siblings();
+
       var loadingAnimation = Y.one('.bubblingG');
-
-      var loaderHeight = 0;
-
-      var availableHeight = 0;
 
       // Push the iframe down 5px to make up for the 5 pixels
       // space created by the curved corners of the browser?

@@ -240,7 +240,7 @@ function appBuildDir () {
 }
 
 function get (option) {
-  const project = agartha.read.json(agartha.path.join(process.cwd(), 'project.json'));
+  const project = agartha.read.json(agartha.path.join(process.cwd(), 'project.json'));  
   if (agartha._.isUndefined(option)) {
     return project;
   }
