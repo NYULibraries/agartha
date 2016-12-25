@@ -1,0 +1,10 @@
+{
+  "title" : "Browse by providers",
+  "id": "providers",
+  "route" : "/providers/index.html",
+  "content": {},
+  "datasource" : {
+    "viewer" : "viewer",
+    "discovery" : "discovery"
+  }
+}

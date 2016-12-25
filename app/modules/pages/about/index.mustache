@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>{{>head}}</head>
+<body id="{{id}}" data-app="{{appUrl}}" data-appRoot="{{appRoot}}">
+  {{>header}}
+  <div class="container-fluid">
+    <div class="flex-container">
+      {{#content}}
+        <main class="main hasSidebar" role="main">
+        {{#main}}
+          <h2  class="page-title">{{title}}</h2>
+          <div class="maintext {{class}}" >{{{html}}}</div>
+        {{/main}}
+        </main>
+        <aside role="complementary">
+        {{#aside}}
+          <h3>{{title}}</h3>
+          <div class="content">
+           <div class="imgHold"><img src="{{../../appUrl}}/images/ISAWLibrary420.jpg"></div>
+            {{{html}}}
+          </div>
+        {{/aside}}
+        </aside>
+      {{/content}}
+    </div>
+  </div>
+  {{>footer}}
+  {{{closure}}}
+</body>
+</html>

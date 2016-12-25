@@ -1,0 +1,8 @@
+{
+  "title": "Book",
+  "id": "book",
+  "viewer": {
+    "url" : "http://dev-dl-pa.home.nyu.edu/books"
+  },
+  "route": "/books/index.html"
+}

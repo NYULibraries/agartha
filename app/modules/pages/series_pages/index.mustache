@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="nojs">
+<head>{{>head}}</head>
+<body id="{{id}}" data-app="{{appUrl}}" data-appRoot="{{appRoot}}">
+  {{>header}}
+  <main class="main container-fluid" role="main">
+    {{#content}}
+      {{#top}}
+        <h2 class="page-title">{{title}}</h2>
+      {{/top}}
+      {{#items}}
+      <div class="items-widget">
+        <div class="top">
+          <div class="resultsnum">Showing results <span class="start"></span> - <span class="docslength"></span> of <span class="numfound"></span></div>
+          <div class="filters">
+              {{#features}}
+                <select id="browse-select">
+                {{#each filters}}
+                  <option data-sort-dir="{{direction}}" value="{{field}}" {{#if selected}}selected{{/if}}>{{label}}</option>
+                {{/each}}
+              {{/features}}
+            </select>
+          </div>
+        </div>
+        <div id="items" class="widget items" data-name="items" data-rows="{{rows}}" data-source="{{datasource}}" data-fl="{{fl}}" {{#fq}}data-fq-{{filter}}="{{value}}"{{/fq}}></div>
+        <div class="bottom text-center">
+          <div id="paginator" class="pagination"></div>
+        </div>
+      </div>
+      {{/items}}
+    {{/content}}
+  </main>
+  {{>footer}}
+  {{{closure}}}
+</body>
+</html>

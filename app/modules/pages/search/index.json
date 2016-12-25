@@ -1,0 +1,7 @@
+{
+  "page": {
+    "bodyClass": "search",
+    "title" : "Search"
+  },
+  "*" : {}
+}

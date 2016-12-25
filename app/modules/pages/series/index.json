@@ -1,0 +1,11 @@
+{
+  "title" : "Series",
+  "route" : "/series/index.html",
+  "menu": [
+    {
+      "context": "navbar",
+      "label": "Series",
+      "weight": 3
+    }
+  ]
+}

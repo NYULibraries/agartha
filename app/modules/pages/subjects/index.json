@@ -1,0 +1,12 @@
+{
+  "title" : "Browse by subjects",
+  "id" : "subjects",
+  "route" : "/subjects/index.html",
+  "content": {},
+  "assets" : {
+    "js" : [
+      "commons.js",
+      "crossframe.js"
+    ]
+  }
+}

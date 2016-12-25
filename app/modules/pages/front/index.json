@@ -1,0 +1,13 @@
+{
+  "title": "Home",
+  "route": "/index.html",
+  "bodyClass": "home",
+  "menu": [
+    {
+      "context": "navbar",
+      "label": "Home",
+      "weight": 1
+    }
+  ],
+  "content": {}
+}

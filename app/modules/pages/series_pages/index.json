@@ -1,0 +1,23 @@
+{
+  "id" : "seriespage",
+  "title" : "Series page",
+  "route" : "/series/*",
+  "htaccess" : false,
+  "assets" : {
+    "js" : [
+        "commons.js"
+      , "speakingurl.js"
+      , "items.js"
+    ],
+    "hbs" : [
+      {
+        "template" : "items.hbs",
+        "id" : "items"
+      }
+    ]
+  },
+  "datasource" : {
+    "viewer" : "viewer",
+    "discovery" : "discovery"
+  }
+}

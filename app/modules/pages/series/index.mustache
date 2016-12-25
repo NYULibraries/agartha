@@ -1,0 +1,25 @@
+<!doctype html>
+<html class="nojs">
+  <head>{{>head}}</head>
+  <body id="{{id}}" data-app="{{appUrl}}" data-appRoot="{{appRoot}}">
+    {{>header}}
+    <main class="main container-fluid" role="main">
+	    <header>
+	      <h2 class="page-title">{{title}}</h2>
+	    </header>
+      {{#content}}
+        <div class="flex-container">
+        {{#nodes}}
+          <article class="item" {{#if score}}data-score="{{score}}"{{/if}}>
+            <div class="card">
+              <a href="{{../../appUrl}}/series/{{route}}">{{label}}</a>
+            </div>
+          </article>
+        {{/nodes}}
+        </div>
+      {{/content}}
+    </main>
+    {{>footer}}
+    {{{closure}}}
+  </body>
+</html>

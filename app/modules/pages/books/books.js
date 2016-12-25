@@ -8,31 +8,37 @@ YUI().use(
 
     'use strict';
 
-    var body = Y.one('body') ;
-    
-    var widget = Y.one('.widget.book') ;
-    
-    var appRoot = body.getAttribute('data-appRoot') ;
+    var body = Y.one('body');
+
+    var widget = Y.one('.widget.book');
+
+    var appRoot = body.getAttribute('data-appRoot');
 
     body.addClass('io-loading');
 
     function calculateAvailableHeight() {
 
-      var siblings = widget.siblings(),
-        viewport = Y.DOM.viewportRegion(),
-        availableHeight = viewport.height;
-      // Push the iframe down 5px to make up for the 5 pixels 
+      var loaderHeight = 0;
+
+      var viewport = Y.DOM.viewportRegion();
+
+      var availableHeight = viewport.height;
+
+      var siblings = widget.siblings();
+
+      var loadingAnimation = Y.one('.bubblingG');
+
+      // Push the iframe down 5px to make up for the 5 pixels
       // space created by the curved corners of the browser?
-      // Not elegant but to consider. 
-     // availableHeight += 5;
-      siblings.each ( function ( node ) {
+      // Not elegant but to consider.
+      // availableHeight += 5;
+      siblings.each(function(node) {
         availableHeight = availableHeight - node.get('offsetHeight');
       });
 
       if (body.hasClass('io-loading')) {
-        var loadingAnimation = Y.one('.bubblingG'),
-            loaderHeight = loadingAnimation.get('offsetHeight');
-            availableHeight = availableHeight + loaderHeight;
+        loaderHeight = loadingAnimation.get('offsetHeight');
+        availableHeight = availableHeight + loaderHeight;
       }
 
       return availableHeight;
@@ -52,32 +58,21 @@ YUI().use(
     }
 
     function showSiblings() {
-
       widget.siblings().each(function(node) {
         node.removeClass('hiddenSiblings');
       });
-
       resizeBookView();
     }
 
-    function requestReplaceLoadBook( request ) {
-
+    function requestReplaceLoadBook(request) {
       var src = widget.getAttribute('data-sourceUrl') ;
-      
       var identifier = request.params.identifier ;
-      
       var page = (request.params.page) ? request.params.page : 1;
-
       widget.setAttribute('data-identifier', identifier);
-
-      if ( request.src === 'replace' ) {
-
-        src = src + '/books/' + request.params.identifier + '/' + page;
-
+      if (request.src === 'replace') {
+        src = src + '/books/' + request.params.identifier + '/' + page + '?embed=true';
         widget.set('src', src);
-
       }
-
     }
 
     var router = new Y.Router({
@@ -97,7 +92,7 @@ YUI().use(
 
     Y.on('button:button-fullscreen:off', showSiblings);
 
-    Y.on('openlayers:change', function ( data ) {
+    Y.on('openlayers:change', function(data) {
       router.save('/books/' + widget.getAttribute('data-identifier') + '/' + data.sequence);
     });
 
@@ -107,7 +102,6 @@ YUI().use(
     });
 
     widget.on('load', function() {
-
       var anim = new Y.Anim({
         node: this,
         to: {
@@ -115,20 +109,16 @@ YUI().use(
         },
         duration: 0.3
       });
-
       resizeBookView();
-
       anim.run();
-
       body.removeClass('io-loading');
-
     });
-    
-    Y.on('change:option:multivolume', function(data) {    
+
+    Y.on('change:option:multivolume', function(data) {
 	    var parts = data.url.split('/');
 	    var route;
 	    if (parts[3]) {
-	    route = '/books/' + parts[3] + '/1';
+	    route = '/books/' + parts[3] + '/1?embed=true';
 	      router.replace(route);
 	    }
     });
@@ -136,6 +126,6 @@ YUI().use(
     resizeBookView();
 
     // initial request
-    router.replace ( router.getPath() ) ;
+    router.replace(router.getPath());
 
   });

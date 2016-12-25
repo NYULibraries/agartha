@@ -1,0 +1,51 @@
+{
+  "title": "Provider",
+  "route": "/providers/*",
+  "content": {
+    "top" : {
+       "title" : "Provider"
+    },
+    "items": {
+      "datasource": "viewer",
+      "rows": 12,
+      "fl": [
+        "*"
+      ],
+      "fq": [
+        {
+          "filter": "bundle",
+          "value": "dlts_book"
+        }
+      ],
+      "features" : {
+        "filters" : [
+          {
+            "direction" : "asc",
+            "field" : "iass_longlabel",
+            "label" : "Sorting by Title",
+            "selected" : true
+          },
+          {
+            "direction" : "asc",
+            "field" : "ss_sauthor",
+            "label" : "Sort by Author",
+            "selected" : false
+          }
+        ]
+      }
+    }
+  },
+  "assets" : {
+    "js" : [
+        "commons.js"
+      , "speakingurl.js"
+      , "browse.js"
+    ],
+    "hbs" : [
+      {
+        "template" : "items.hbs",
+        "id" : "items"
+      }
+    ]
+  }
+}

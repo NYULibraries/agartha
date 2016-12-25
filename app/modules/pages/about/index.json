@@ -1,0 +1,10 @@
+{
+  "title" : "About",
+  "route" : "/about/index.html",
+  "menu": {
+    "context": "navbar",
+    "label": "About",
+    "weight": 3
+  },
+  "content" : {}
+}
