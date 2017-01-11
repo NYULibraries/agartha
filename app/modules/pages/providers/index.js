@@ -17,10 +17,10 @@ function providers (data) {
   data.content.terms = [];
 
   function step1 () {
-    var url = datasource[data.datasource.viewer].url;
-    var compiled = agartha._.template("<%=url%>/sources/field/field_partner");
+    const url = datasource[data.datasource.viewer].url;
+    const compiled = agartha._.template("<%=url%>/sources/field/field_partner");
     // Use http://underscorejs.org/#template to render the URL that we will use to request data
-    var src = compiled({ url : url });
+    const src = compiled({ url : url });
     /** Use Viewer's API endpoint to collect partners */
     /** Example: http://stage-dl-pa.home.nyu.edu/viewer/sources/field/field_subject */
     agartha.request(src, function (error, response, data) {
@@ -30,7 +30,7 @@ function providers (data) {
   }
 
   function step2 (response) {
-    var documents = JSON.parse(response);
+    const documents = JSON.parse(response);
     agartha._.each(documents, function (document) {
       terms.push({'label' : document.value, 'nid' : document.raw_value});
     });
@@ -38,15 +38,11 @@ function providers (data) {
   }
 
   function step3 () {
-
-    var url = datasource[data.datasource.discovery].url;
-
-    var compiled = agartha._.template("<%=url%>?wt=json&fq=sm_collection_code:<%=collectionCode%>&rows=0&facet=true&facet.field=sm_collection_partner_label");
-
-    var src = compiled({ url : url, collectionCode : collectionCode });
-
+    const url = datasource[data.datasource.discovery].url;
+    const compiled = agartha._.template("<%=url%>?wt=json&fq=sm_collection_code:<%=collectionCode%>&rows=0&facet=true&facet.field=sm_provider_label");
+    const src = compiled({ url : url, collectionCode : collectionCode });    
     /** Use Viewer's API endpoint to collect partners */
-    /** Example: http://stage-dl-pa.home.nyu.edu/viewer/sources/field/field_subject */
+    /** Example: http://stage-dl-pa.home.nyu.edu/viewer/sources/field/field_partner */
     // http://dev-discovery.dlib.nyu.edu:8080/solr3_discovery/stage/select?wt=json&fq=sm_collection_code:awdl&rows=0&facet=true&facet.field=sm_collection_partner_label
     agartha.request(src, function (error, response, data) {
       if (error) return;
@@ -56,9 +52,8 @@ function providers (data) {
   }
 
   function step4 (response) {
-    var documents = JSON.parse(response);
-    var labels = documents.facet_counts.facet_fields.sm_collection_partner_label;
-    var count = labels.length;
+    const documents = JSON.parse(response);
+    const labels = documents.facet_counts.facet_fields.sm_provider_label;
     agartha._.each(labels, function(label, index) {
       var eq = ((index + 1) % 2);
       // Apache Solr facets in response are list as [ value, count, ... ]
@@ -66,10 +61,13 @@ function providers (data) {
       if (eq === 1) {
         // only accpet facets with results
         if (labels[index+1] > 0) {
-          data.content.terms.push(agartha._.findWhere(terms, {label: label}));
+          if (agartha._.isObject(agartha._.findWhere(terms, {label: label}))) {
+            data.content.terms.push(agartha._.findWhere(terms, {label: label}));
+          }
         }
       }
     });
+    
     agartha.emit('task.done', data);
 
   }

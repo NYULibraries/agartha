@@ -10,9 +10,9 @@ function series_pages(data) {
 
   var entities = new Entities();
 
-  var collectionCode = agartha.get('collectionCode');
-
   var discovery = agartha.get('datasource').discovery.url;
+
+  var collectionCode = agartha.get('collectionCode');
 
   data.content.items.datasource = discovery;
 
@@ -26,9 +26,16 @@ function series_pages(data) {
   // Use http://underscorejs.org/#template to render the URL that we will use to request data
   var src = compiled({ collectionCode : collectionCode, discovery : discovery });
 
+  if (collectionCode.match('OR')) {
+    collectionCode = collectionCode.replace(/[\(\)]/g, '').split(' OR ');
+  }
+
   agartha.request(src, (error, response, body) => {
+
     if (error) return;
+
     var datasource = JSON.parse(body);
+
     var documents = datasource.response.docs;
 
     var filters = data.content.items.fq;
@@ -38,15 +45,17 @@ function series_pages(data) {
       var node = {};
 
       var identifier = doc.ss_identifier;
-      if (
-        !agartha._.has(data, identifier) &&
-        doc.bs_status &&
-        agartha._.contains(doc.sm_series_code, collectionCode)
-      ) {
+
+      if (agartha._.has(data, identifier)) return;
+
+      if (!doc.bs_status) return;
+
+      // old test: agartha._.contains(doc.sm_series_code, collectionCode)
+      if (agartha._.intersection(doc.sm_series_code, collectionCode)) {
 
         if (!doc.zs_data) return;
 
-        data.content.top.title = doc.label;
+        data.content.top.title = doc.ss_series_label;
 
         node.data = JSON.parse(doc.zs_data);
 
@@ -61,6 +70,8 @@ function series_pages(data) {
         data.content.items.fq = agartha._.union(filters, [ { 'filter' : 'sm_series_identifier', 'value' : doc.ss_identifier }, { 'filter' : 'is_ispartofseries', 'value' : 1 } ]);
 
         data.content.node = node;
+
+        console.log(node)
 
         data.route = '/series/' + getSlug(entities.decode(node.label)) + '/index.html';
 

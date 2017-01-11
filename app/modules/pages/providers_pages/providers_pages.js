@@ -8,6 +8,7 @@ YUI().use(
   'gallery-paginator',
   'anim', function (Y) {
   'use strict';
+
   function a () {
     return `
     <div class="item-list flex-container">
@@ -23,6 +24,16 @@ YUI().use(
         </div>
         <h1 class="md_title"><a href="{{../app.appRoot}}/books/{{ss_book_identifier}}/1">{{ss_title_long}}</a></h1>
         <div class="md_authors"><span class="md_label">Author:</span> {{#each sm_author}}<span  class="md_author">{{this}}</span>{{/each}}</div>
+        {{#if zm_series_data}}
+        <div class="md_series">
+          <span class="md_label">Series:</span>
+          {{#each zm_series_data}}
+            {{#json this}}
+              <a class="md_series_each" href="{{../../../../app.appRoot}}/series/{{#speakingurl}}{{series}}{{/speakingurl}}">{{series}}{{#if volume_number}} v. {{volume_number}}{{/if}}</a>
+            {{/json}}
+          {{/each}}
+        </div>
+        {{/if}}
         <div><span class="md_label">Publisher:</span> {{#each sm_publisher}}<span>{{this}}</span>{{/each}}</div>
         <div><span class="md_label">Place of Publication:</span> {{ss_publocation}}</div>
         <div><span class="md_label">Date of Publication:</span> {{ss_pubdate}}</div>

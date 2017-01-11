@@ -12,7 +12,7 @@ function providers_pages (data) {
 
   const viewer = datasource.viewer.url;
 
-  const partner_label_url = discovery + '?wt=json&fq=sm_collection_code:<%=collectionCode%>&rows=0&facet=true&facet.field=sm_collection_partner_label';
+  const partner_label_url = discovery + '?wt=json&fq=sm_collection_code:<%=collectionCode%>&rows=0&facet=true&facet.field=sm_provider_label';
 
   const partner_url = viewer + '/sources/field/field_partner';
 
@@ -26,12 +26,13 @@ function providers_pages (data) {
     if (error) return;
     const documents = JSON.parse(source);
     agartha._.each(documents, (document) => {
+      console.log(document)
       terms.push({'label' : document.value, 'nid' : document.raw_value});
     });
     agartha.request(partner_label_url, (error, response, source) => {
       if (error) return;
       const documents = JSON.parse(source);
-      const labels = documents.facet_counts.facet_fields.sm_collection_partner_label;
+      const labels = documents.facet_counts.facet_fields.sm_provider_label;
       const count = labels.length;
       const filters = data.content.items.fq;
       var destination = [];
@@ -44,13 +45,17 @@ function providers_pages (data) {
           // only accpet facets with results
           if (labels[index+1] > 0) {
             provider = agartha._.findWhere(terms, {label: label});
-            data.route = '/providers/' + provider.nid + '/index.html',
-            data.content.top.label = provider.label;
-            data.title = provider.label;
-            /** Add to the filters the subjects field */
-            destination = [ { "filter": "im_field_partner", "value": provider.nid } ];
-            data.content.items.fq = destination.concat(filters);
-            agartha.emit('task.done', data);
+            if (provider) {
+              console.log(provider)
+              data.route = '/providers/' + provider.nid + '/index.html',
+              data.content.top.label = provider.label;
+              data.title = provider.label;
+              /** Add to the filters the subjects field */
+              console.log(provider)
+              destination = [ { "filter": "sm_provider_nid", "value": provider.nid } ];
+              data.content.items.fq = destination.concat(filters);
+              agartha.emit('task.done', data);
+            }
           }
         }
       });
