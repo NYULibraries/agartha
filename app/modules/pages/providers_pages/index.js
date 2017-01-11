@@ -26,7 +26,6 @@ function providers_pages (data) {
     if (error) return;
     const documents = JSON.parse(source);
     agartha._.each(documents, (document) => {
-      console.log(document)
       terms.push({'label' : document.value, 'nid' : document.raw_value});
     });
     agartha.request(partner_label_url, (error, response, source) => {
