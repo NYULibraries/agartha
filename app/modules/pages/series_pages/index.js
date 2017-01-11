@@ -71,8 +71,6 @@ function series_pages(data) {
 
         data.content.node = node;
 
-        console.log(node)
-
         data.route = '/series/' + getSlug(entities.decode(node.label)) + '/index.html';
 
         agartha.emit('task.done', data);
