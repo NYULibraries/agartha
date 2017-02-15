@@ -1,53 +1,20 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "agartha@https://api.github.com/repos/NYULibraries/agartha/tarball/1.0.2-beta",
-        "scope": null,
-        "escapedName": "agartha",
-        "name": "agartha",
-        "rawSpec": "https://api.github.com/repos/NYULibraries/agartha/tarball/1.0.2-beta",
-        "spec": "https://api.github.com/repos/NYULibraries/agartha/tarball/1.0.2-beta",
-        "type": "remote"
-      },
-      "/Users/ortiz/tools/temp/agartha-cli"
-    ]
-  ],
-  "_from": "https://api.github.com/repos/NYULibraries/agartha/tarball/1.0.2-beta",
-  "_id": "agartha@1.0.2-beta",
-  "_inCache": true,
-  "_location": "/agartha",
-  "_phantomChildren": {},
-  "_requested": {
-    "raw": "agartha@https://api.github.com/repos/NYULibraries/agartha/tarball/1.0.2-beta",
-    "scope": null,
-    "escapedName": "agartha",
-    "name": "agartha",
-    "rawSpec": "https://api.github.com/repos/NYULibraries/agartha/tarball/1.0.2-beta",
-    "spec": "https://api.github.com/repos/NYULibraries/agartha/tarball/1.0.2-beta",
-    "type": "remote"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://api.github.com/repos/NYULibraries/agartha/tarball/1.0.2-beta",
-  "_shasum": "bbffef483c9c890ee88e623a59155cd449b569f5",
-  "_shrinkwrap": null,
-  "_spec": "agartha@https://api.github.com/repos/NYULibraries/agartha/tarball/1.0.2-beta",
-  "_where": "/Users/ortiz/tools/temp/agartha-cli",
-  "author": {
-    "name": "Alberto Ortiz Flores",
-    "email": "dismorfo@gmail.com"
-  },
-  "bugs": {
-    "url": "https://github.com/nyulibraries/agartha/issues"
-  },
+  "name": "agartha",
+  "description": "Agartha site generator",
+  "version": "1.0.2-beta",
+  "author": "Alberto Ortiz Flores <dismorfo@gmail.com>",
   "contributors": [
-    {
-      "name": "Alberto Ortiz Flores",
-      "email": "dismorfo@gmail.com"
-    }
+    "Alberto Ortiz Flores <dismorfo@gmail.com>"
   ],
+  "keywords": [
+    "agartha",
+    "framework",
+    "web",
+    "app",
+    "api"
+  ],
+  "repository": "NYULibraries/agartha",
+  "license": "MIT",
   "dependencies": {
     "dateformat": "^1.0.12",
     "dimas-parallel": "^1.1.3",
@@ -68,7 +35,6 @@
     "uglify-js": "^2.6.2",
     "xml2js": "^0.4.17"
   },
-  "description": "Agartha site generator",
   "devDependencies": {
     "eslint": "^3.5.0",
     "eslint-config-google": "^0.6.0"
@@ -77,25 +43,8 @@
     "node": ">= 0.10"
   },
   "files": [],
-  "homepage": "https://github.com/nyulibraries/agartha#readme",
-  "keywords": [
-    "agartha",
-    "framework",
-    "web",
-    "app",
-    "api"
-  ],
-  "license": "MIT",
-  "name": "agartha",
-  "optionalDependencies": {},
-  "readme": "\nWrite HTML files from pages.json file\n========\n\n### Someday you will find documentation in this file\n",
-  "readmeFilename": "README.md",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nyulibraries/agartha.git"
-  },
   "scripts": {
-    "lint": "eslint *.js"
+    "lint": "./node_modules/.bin/eslint *.js"
   },
-  "version": "1.0.2-beta"
+  "version": "1.0.3-beta"
 }
