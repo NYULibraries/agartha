@@ -1,10 +1,28 @@
 {
+  "id" : "about",
   "title" : "About",
   "route" : "/about/index.html",
-  "menu": {
-    "context": "navbar",
-    "label": "About",
-    "weight": 3
+  "menu": [
+    {
+      "context": "navbar",
+      "label": "About",
+      "weight": 1
+    }
+  ],
+  "content" : {
+    "main": {
+      "title" : "Main",
+      "html": "<p>Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>"
+    },
+    "aside": {
+      "title" : "Aside",
+      "html": "<p>At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>"
+    }
   },
-  "content" : {}
+  "assets" : {
+    "js" : [
+      "commons.js",
+      "crossframe.js"
+    ]
+  }
 }

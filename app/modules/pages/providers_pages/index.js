@@ -45,12 +45,10 @@ function providers_pages (data) {
           if (labels[index+1] > 0) {
             provider = agartha._.findWhere(terms, {label: label});
             if (provider) {
-              console.log(provider)
               data.route = '/providers/' + provider.nid + '/index.html',
               data.content.top.label = provider.label;
               data.title = provider.label;
               /** Add to the filters the subjects field */
-              console.log(provider)
               destination = [ { "filter": "sm_provider_nid", "value": provider.nid } ];
               data.content.items.fq = destination.concat(filters);
               agartha.emit('task.done', data);

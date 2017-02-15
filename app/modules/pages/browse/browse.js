@@ -1,11 +1,9 @@
 /* jshint laxcomma: true */
-YUI().use('node', 'event', 'handlebars', 'jsonp', 'router', 'gallery-paginator', 'anim', function (Y) {
-
-  'use strict';
-
-  function removeQueryDiacritics (str) {
-    var diacriticsMap = {};
-    var replacementList = [
+YUI.add('dlts-diacritics', function (Y) {
+  Y.Diacritics = {
+    removeQueryDiacritics (str) {
+      var diacriticsMap = {};
+      var replacementList = [
       {
         base: ' ',
         chars: "\u00A0",
@@ -301,24 +299,28 @@ YUI().use('node', 'event', 'handlebars', 'jsonp', 'router', 'gallery-paginator',
         base: 'z',
         chars: "\u24E9\uFF5A\u017A\u1E91\u017C\u017E\u1E93\u1E95\u01B6\u0225\u0240\u2C6C\uA763",
       }
-    ];
-
-    for (var i = 0; i < replacementList.length; i += 1) {
-      var chars = replacementList[i].chars;
-      for (var j = 0; j < chars.length; j += 1) {
-        diacriticsMap[chars[j]] = replacementList[i].base;
+      ];
+      for (var i = 0; i < replacementList.length; i += 1) {
+        var chars = replacementList[i].chars;
+        for (var j = 0; j < chars.length; j += 1) {
+          diacriticsMap[chars[j]] = replacementList[i].base;
+        }
       }
+      function removeDiacritics(str) {
+        return str.replace(/[^\u0000-\u007e]/g, function(c) {
+          return diacriticsMap[c] || c;
+        });
+      }
+      return removeDiacritics(str);
     }
-
-    function removeDiacritics(str) {
-      return str.replace(/[^\u0000-\u007e]/g, function(c) {
-        return diacriticsMap[c] || c;
-      });
-    }
-
-    return removeDiacritics(str);
-
   }
+}, '0.0.1', {
+    requires: []
+});
+
+
+YUI().use('node', 'event', 'handlebars', 'jsonp', 'router', 'gallery-paginator', 'anim', 'dlts-diacritics', function (Y) {
+  'use strict';
 
   function a () {
     return `
@@ -454,7 +456,7 @@ YUI().use('node', 'event', 'handlebars', 'jsonp', 'router', 'gallery-paginator',
       page : page,
       rows : rows,
       sort : sort,
-      q : removeQueryDiacritics(query)
+      q : Y.Diacritics.removeQueryDiacritics(query)
     });
   });
 
@@ -542,7 +544,6 @@ YUI().use('node', 'event', 'handlebars', 'jsonp', 'router', 'gallery-paginator',
       }
       /* Re-init pagination each time, since number of results changes */
       initPaginator(page , numfound, rows);
-
       if (numfound > 0) {
         node.setAttribute('data-numFound', numfound);
         node.setAttribute('data-start', start);

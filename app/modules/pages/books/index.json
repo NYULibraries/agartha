@@ -1,8 +1,13 @@
 {
-  "title": "Book",
   "id": "book",
-  "viewer": {
-    "url" : "http://dev-dl-pa.home.nyu.edu/books"
-  },
-  "route": "/books/index.html"
+  "title": "Book",
+  "route": "/books/index.html",
+  "content" : {},
+  "assets" : {
+    "js" : [
+      "commons.js",
+      "crossframe.js",
+      "books.js"
+    ]
+  }
 }
