@@ -39,7 +39,7 @@
     "js" : [
         "commons.js"
       , "speakingurl.js"
-      , "browse.js"
+      , "providers_pages.js"
     ],
     "hbs" : [
       {

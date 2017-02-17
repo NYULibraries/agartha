@@ -6,7 +6,7 @@
     {
       "context": "navbar",
       "label": "Browse",
-      "weight": 1
+      "weight": 5
     }
   ],
   "content": {

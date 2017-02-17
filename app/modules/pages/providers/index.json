@@ -2,6 +2,13 @@
   "title" : "Browse by providers",
   "id": "providers",
   "route" : "/providers/index.html",
+  "menu": [
+    {
+      "context": "navbar",
+      "label": "Providers",
+      "weight": 4
+    }
+  ],
   "content": {},
   "datasource" : {
     "viewer" : "viewer",

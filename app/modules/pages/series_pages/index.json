@@ -3,11 +3,43 @@
   "title" : "Series page",
   "route" : "/series/*",
   "htaccess" : false,
+  "content": {
+    "top" : {
+       "title" : "Browse books by series"
+    },
+    "items": {
+      "datasource": "discovery",
+      "rows": 12,
+      "fl": [ "*" ],
+      "fq": [
+        {
+          "filter": "bundle",
+          "value": "dlts_book"
+        }
+      ],
+      "features" : {
+        "filters" : [
+          {
+            "direction" : "asc",
+            "field" : "iass_longlabel",
+            "label" : "Sorting by Title",
+            "selected" : true
+          },
+          {
+            "direction" : "asc",
+            "field" : "ss_sauthor",
+            "label" : "Sort by Author",
+            "selected" : false
+          }
+        ]
+      }
+    }
+  },
   "assets" : {
     "js" : [
         "commons.js"
       , "speakingurl.js"
-      , "items.js"
+      , "series_pages.js"
     ],
     "hbs" : [
       {
@@ -15,9 +47,5 @@
         "id" : "items"
       }
     ]
-  },
-  "datasource" : {
-    "viewer" : "viewer",
-    "discovery" : "discovery"
   }
 }

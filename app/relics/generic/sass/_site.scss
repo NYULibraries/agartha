@@ -1,0 +1,177 @@
+html {
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+}
+
+body {
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  font-family: $font-family-sans-serif;
+}
+
+.container-fluid {
+  width: 100%;
+  max-width: 1400px;
+  padding-left: 5%;
+  padding-right: 5%;
+  @media (min-width: $grid-float-breakpoint) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  margin: 0px auto;
+  overflow: hidden;
+}
+
+.flex-container {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -ms-flex-wrap: wrap;
+  margin-top: 0px;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -ms-flex-pack: justify;
+  .item {
+    -ms-flex: 0 1 32%;
+    -webkit-flex: 0 1 32%;
+    flex: 0 1 32%;
+    // Firefox won't allow percentage margins here
+    margin: 10px 0;
+    @media (max-width: 961px) {
+       -ms-flex: 0 1 49%;
+      -webkit-flex: 0 1 49%;
+      flex: 0 1 49%;
+      margin: 10px 0;
+    }
+    @media (max-width: $grid-float-breakpoint-max) {
+      -ms-flex: 1 1 100%;
+      -webkit-flex: 1 1 100%;
+      flex: 1 1 100%;
+      margin: 10px 0;
+    }
+  }
+  .itemdouble {
+    -ms-flex: 1 1 330px;
+    -webkit-flex: 1 1 330px;
+    flex: 1 1 330px;
+    margin: 0 0px 20px 0px;
+    @media (min-width: 1090px) {
+      -ms-flex: 2 1 680px;
+      -webkit-flex: 2 1 680px;
+      flex: 2 1 680px;
+    }
+  }
+  .item:empty, .card:empty {
+    height: 0;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    margin: 0;
+  }
+}
+
+.item-list {
+  margin-top: 30px;
+}
+
+main {
+  padding: .5em 0 2em;
+  @media (min-width: $grid-float-breakpoint) {
+    padding: 2em 0 4em;
+  }
+  a:link, a:focus {
+    font-weight: bold;
+  }
+  ul {
+    margin: 1rem 0;
+    padding: 0;
+    list-style-position: inside;
+  }
+  li {
+    padding-left: .1rem;
+    padding-right: .1rem;
+  }
+  p {
+    margin: 1rem 0;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  h2.page-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-shadow: 0px 0px 1px white;
+    margin-top: 0;
+    @media (min-width: $grid-float-breakpoint) {
+      font-size: 2rem;
+    }
+  }
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 2.5rem 0 .5rem;
+    text-shadow: 0px 0px 1px white;
+  }
+  header, .top {
+    @include clearfix;
+  }
+}
+
+body.page .maintext {
+  max-width: 53rem;
+}
+
+body#book {
+  overflow-y: hidden;
+  .navbar {
+    margin-bottom: 0;
+  }
+  .container-fluid {
+    max-width: none;
+  }
+  #book {
+    border: none;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.resultsnum {
+  font-size: 1em;
+  color: #666;
+  margin-right: 20px;
+  float: left;
+  .s-query {
+    font-weight: bold;
+    color: #222;
+  }
+}
+
+/** Elements that are not meant to be seen until io its loading */
+.io-loading {
+  .resultsnum,
+  #browse-select, .filters, .pagination, .footer-wrapper {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+  }
+}
+
+
+.widget {
+  &.book {
+    width: 100%;
+    opacity: 0;
+  }
+}
+
+.hiddenSiblings {
+  display: none;
+  visibility: hidden;
+}

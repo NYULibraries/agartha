@@ -1,5 +1,5 @@
 input[type="submit"] {
-  background: #ecdcc8   image-url("search-icon-2x.png") no-repeat center center;
+  background: #ecdcc8 image-background-url("search-icon-2x.png") no-repeat center center;
   background-size: auto 80%;
   text-indent: -1000em;
   border: 1px solid $brand-secondary3;
@@ -44,7 +44,6 @@ input[type="text"] {
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
   -ms-flex-wrap: wrap;
-  // width: 100%;
   @media (min-width: $grid-float-breakpoint) {
     width: 100%;
     margin: 0;
@@ -67,14 +66,27 @@ input:focus {
   color: #666;
   float: left;
   margin-right: 20px;
-  .s-query, .start, .docslength, .numfound {
+  .s-query,
+  .start,
+  .docslength,
+  .numfound {
     font-weight: bold;
   }
 }
 
-// Navbar form
-//
+.items-no-results {
+  .resultsnum,
+  #browse-select,
+  .filters {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+  }
+}
 
+// Navbar form
 .navbar-form {
   margin-left: -$navbar-padding-horizontal;
   margin-right: -$navbar-padding-horizontal;

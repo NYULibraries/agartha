@@ -8,11 +8,9 @@
 
 'use strict'
 
-const agartha = (function() {
-
+const agartha = (function () {
   // http://underscorejs.org
   const _ = require('underscore')
-
   if (!_.isObject(process.agartha)) {
     // https://nodejs.org/api/fs.html
     const fs = require('fs')
@@ -30,6 +28,11 @@ const agartha = (function() {
     const timespan = _.now()
     // https://github.com/substack/node-mkdirp
     const mkdirp = require('mkdirp')
+    // https://github.com/adam-lynch/graceful-ncp
+    // https://github.com/AvianFlu/ncp
+    let copy = require('ncp').ncp
+
+    copy.limit = 16
 
     /**
      * Check if the given directory `path` is empty.
@@ -38,14 +41,15 @@ const agartha = (function() {
      * @param {Function} fn
      */
     function emptyDirectory (path, fn) {
-      fs.readdir(path, function(err, files) {
-        if (err && 'ENOENT' != err.code) throw err
+      fs.readdir(path, function (err, files) {
+        if (err && err.code !== 'ENOENT') throw err
         fn(!files || !files.length)
       })
     }
 
-    function log (msg, status) {
-      console.log('   \x1b[36m'+status+'\x1b[0m : ' + msg)
+    function log (msg, status, callback) {
+      console.log('   \x1b[36m' + status + '\x1b[0m : ' + msg)
+      if (_.isFunction(callback)) callback()
     }
 
     /**
@@ -54,27 +58,27 @@ const agartha = (function() {
      * @param {String} path
      * @param {String} str
      */
-    function write (filename, str, mode) {
+    function write (filename, str, mode, callback) {
       const dirname = path.dirname(filename)
       if (!exists(dirname)) {
         mkdirp(dirname, function (err) {
-          if (err) console.error(err);
+          if (err) console.error(err)
           else {
             try {
-              fs.writeFile(filename, str, 'utf8', function() {
-                log(filename, 'create')
+              fs.writeFile(filename, str, 'utf8', function () {
+                log(filename, 'create', callback)
               })
             }
             catch (error) {
               console.error(error)
             }
           }
-        });
+        })
       }
       else {
         try {
-          fs.writeFile(filename, str, 'utf8', function() {
-            log(filename, 'create')
+          fs.writeFile(filename, str, 'utf8', function () {
+            log(filename, 'create', callback)
           })
         }
         catch (error) {
@@ -92,7 +96,7 @@ const agartha = (function() {
     function mkdir (path, fn) {
       mkdirp(path, '0755', function (err) {
         if (err) throw err
-        console.log('   create : ' + path)
+        log(path, 'create')
         fn && fn()
       })
     }
@@ -128,7 +132,7 @@ const agartha = (function() {
       var results = []
       try {
         if (fs.lstatSync(dir).isDirectory()) {
-          fs.readdirSync(dir).forEach(function(file) {
+          fs.readdirSync(dir).forEach(function (file) {
             results[file] = agartha.path.join(dir, file)
           })
         }
@@ -166,7 +170,7 @@ const agartha = (function() {
         // https://www.joyent.com/node-js/production/design/errors#operational-errors-vs-programmer-errors
         const datasource = environment[AGARTHA_ENVIRONMENT]
         if (agartha._.isUndefined(datasource)) {
-          throw new Error('Unable to read environment.json')
+          throw new Error('Unable to read env.json')
         }
         project.datasource = datasource
       }
@@ -317,6 +321,10 @@ const agartha = (function() {
       return get('appUrl')
     }
 
+    function cli () {
+      return process.argv[1]
+    }
+
     // export
     process.agartha = {
       _: _,
@@ -345,6 +353,8 @@ const agartha = (function() {
       emit: eventEmitter.emit,
       dateformat: dateformat,
       exit: exit,
+      cli: cli,
+      copy: copy,
       get: get
     }
   }

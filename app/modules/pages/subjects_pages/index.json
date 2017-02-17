@@ -11,11 +11,11 @@
       "rows": 12,
       "fl": [ "*" ],
       "fq": [
-          {
-            "filter": "bundle",
-            "value": "dlts_book"
-          }
-        ],
+        {
+          "filter": "bundle",
+          "value": "dlts_book"
+        }
+      ],
       "features" : {
         "filters" : [
           {

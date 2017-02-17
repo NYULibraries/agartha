@@ -1,11 +1,22 @@
 {
   "title" : "Series",
   "route" : "/series/index.html",
+  "id" : "series",
   "menu": [
     {
       "context": "navbar",
       "label": "Series",
-      "weight": 3
+      "weight": 2
     }
-  ]
+  ],
+  "datasource" : {
+    "drupal_subjects" : "viewer",
+    "subjects" : "discovery"
+  },
+  "assets" : {
+    "js" : [
+      "commons.js",
+      "crossframe.js"
+    ]
+  }
 }

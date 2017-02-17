@@ -831,3 +831,36 @@ $pagination-disabled-bg: #FCF7F0;
 // $dl-horizontal-offset:        $component-offset-horizontal
 //* Horizontal line color.
 // $hr-border:                   $gray-lighter
+
+
+/// https://css-tricks.com/snippets/sass/simple-asset-helper-functions/
+
+/// Base path for assets (fonts, images...),
+/// should not include trailing slash
+/// @access public
+/// @type String
+$asset-base: '';
+
+$asset-base-path: $asset-base + '/images' !default;
+
+/// Asset URL builder
+/// @access private
+/// @param {String} $type - Asset type, matching folder name
+/// @param {String} $file - Asset file name, including extension
+/// @return {URL} - A `url()` function leading to the asset
+@function asset($type, $file) {
+  @return url($asset-base-path + '/' + $type + '/' + $file);
+}
+
+@function image-background-url($file) {
+  @return url($asset-base-path + '/' + $file);
+}
+
+/// Font asset helper
+/// @access public
+/// @param {String} $file - Asset file name, including extension
+/// @return {URL} - A `url()` function leading to the font
+/// @require {function} asset
+@function font($file) {
+  @return asset('fonts', $file);
+}

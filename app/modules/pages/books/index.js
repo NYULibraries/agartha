@@ -1,13 +1,8 @@
 function books (data) {
-
-  'use strict';
-
-  var agartha = require('agartha').agartha;
-
-  data.content.viewer = agartha.get('datasource').viewer.url;
-
-  agartha.emit('task.done', data);
-
+  'use strict'
+  let agartha = process.agartha
+  data.content.viewer = agartha.get('datasource').viewer.url
+  agartha.emit('task.done', data)
 }
 
-exports.books = books;
+exports.books = books
