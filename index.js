@@ -257,12 +257,6 @@ const agartha = (function () {
          my_target: {
            files: () => {
              var targets = {}
-             //grunt.file.recurse(__dirname + '/source/js/', function callback (abspath, rootdir, subdir, filename) {
-             //  if ( filename.match('.js') ) {
-             //    var name = filename.replace('.js', '');
-             //    targets['build/js/' + name + '.min.js'] = abspath;
-             //   }
-             //});
              return targets
            }
          }
@@ -324,6 +318,10 @@ const agartha = (function () {
     function cli () {
       return process.argv[1]
     }
+    
+    function listRelics () {
+      return getDirectories(path.join(cwd(), 'app/relics'))
+    }
 
     // export
     process.agartha = {
@@ -355,11 +353,11 @@ const agartha = (function () {
       exit: exit,
       cli: cli,
       copy: copy,
+      relics: listRelics,
       get: get
     }
   }
   return process.agartha
-
 }())
 
 exports.agartha = agartha
