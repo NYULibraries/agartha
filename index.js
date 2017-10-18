@@ -14,6 +14,8 @@ const agartha = (function () {
   if (!_.isObject(process.agartha)) {
     // https://nodejs.org/api/fs.html
     const fs = require('fs')
+    // https://npmjs.org/package/rimraf
+    const rimraf = require('rimraf')
     // https://nodejs.org/api/path.html
     const path = require('path')
     // https://nodejs.org/api/events.html
@@ -31,6 +33,7 @@ const agartha = (function () {
     // https://github.com/adam-lynch/graceful-ncp
     // https://github.com/AvianFlu/ncp
     let copy = require('ncp').ncp
+    
 
     copy.limit = 16
 
@@ -50,6 +53,22 @@ const agartha = (function () {
     function log (msg, status, callback) {
       console.log('   \x1b[36m' + status + '\x1b[0m : ' + msg)
       if (_.isFunction(callback)) callback()
+    }
+    
+    function canWrite (targetPath) {
+      return new Promise((resolve, reject) => {
+        fs.stat(targetPath, (err) => {
+          if (err) reject(err)
+          else {
+            fs.access(targetPath, fs.W_OK, (err) => {
+              if (err) reject(err)
+              else {
+                resolve(true)
+              }
+            })
+          }
+        })
+      })
     }
 
     /**
@@ -345,6 +364,9 @@ const agartha = (function () {
       cli: cli,
       copy: copy,
       relics: listRelics,
+      fs: fs,
+      canWrite: canWrite,
+      rimraf: rimraf,
       get: get
     }
   }
