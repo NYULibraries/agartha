@@ -1,6 +1,6 @@
 {
   "name": "agartha",
-  "description": "Transform project into a site",
+  "description": "Transform project into a site.",
   "version": "0.1.0",
   "homepage": "https://github.com/NYULibraries/agartha",
   "author": {
@@ -15,15 +15,10 @@
     "url": "https://github.com/NYULibraries/agartha/issues"
   },
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 7.4"
   },
   "dependencies": {},
-  "peerDependencies": {
-    "grunt": "~0.4.0"
-  },
-  "keywords": [
-    "gruntplugin"
-  ],
+  "keywords": [],
   "files": [],
   "maintainers": [
     {

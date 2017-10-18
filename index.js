@@ -106,16 +106,10 @@ const agartha = (function () {
      * @param {String} path
      */
     function forge () {
-
-      // custom module
       const transform = require('./lib/transform')
-
-      transform.assets()
-
-      transform.sass()
-
-      transform.build()
-
+            //transform.assets()
+            //transform.sass()
+            transform.build()
     }
 
     function exists (filePath) {
@@ -186,6 +180,41 @@ const agartha = (function () {
           return project[option]
         }
       }
+    }
+
+    function exit (error) {
+      log(error, 'critical')
+      process.exit(1)
+    }
+
+    function cwd() {
+     return __dirname
+    }
+
+    function readdirSync (directory) {
+      return fs.readdirSync(directory)
+    }
+
+    function getDirectories (dirPath) {
+      return fs.readdirSync(dirPath).filter(function(file) {
+        return fs.statSync(path.join(dirPath, file)).isDirectory()
+      })
+    }
+
+    function relic () {
+      return get('relic')
+    }
+
+    function appUrl () {
+      return get('appUrl')
+    }
+
+    function cli () {
+      return process.argv[1]
+    }
+    
+    function listRelics () {
+      return getDirectories(path.join(cwd(), 'app/relics'))
     }
 
     const configurations = {
@@ -264,7 +293,6 @@ const agartha = (function () {
       }
     }
 
-    // read files
     const read = {
       // https://github.com/Leonidas-from-XIV/node-xml2js
       xml : require('xml2js').parseString,
@@ -287,43 +315,6 @@ const agartha = (function () {
         }
       }
     }
-
-    function exit (error) {
-      log(error, 'critical')
-      process.exit(1)
-    }
-
-    function cwd() {
-     return __dirname
-    }
-
-    function readdirSync (directory) {
-      return fs.readdirSync(directory)
-    }
-
-    function getDirectories (dirPath) {
-      return fs.readdirSync(dirPath).filter(function(file) {
-        return fs.statSync(path.join(dirPath, file)).isDirectory()
-      })
-    }
-
-    function relic () {
-      return get('relic')
-    }
-
-    function appUrl () {
-      return get('appUrl')
-    }
-
-    function cli () {
-      return process.argv[1]
-    }
-    
-    function listRelics () {
-      return getDirectories(path.join(cwd(), 'app/relics'))
-    }
-
-    // export
     process.agartha = {
       _: _,
       configurations: configurations,
