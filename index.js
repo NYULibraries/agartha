@@ -107,8 +107,8 @@ const agartha = (function () {
      */
     function forge () {
       const transform = require('./lib/transform')
-            //transform.assets()
-            //transform.sass()
+            transform.assets()
+            transform.sass()
             transform.build()
     }
 
