@@ -32,6 +32,7 @@
     "npm": "^3.10.3",
     "request": "^2.72.0",
     "rimraf": "^2.5.3",
+    "solr-node": "^1.0.13",
     "sorted-object": "1.0.0",
     "speakingurl": "^9.0.0",
     "uglify-js": "^2.6.2",
