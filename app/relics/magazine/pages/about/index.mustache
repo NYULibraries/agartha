@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>{{>head}}</head>
+<body class="page" id="{{id}}">
+  {{>header}}
+  <div class="container-fluid">
+    <div class="flex-container">
+      {{#content}}
+        <main class="main {{#aside}}hasSidebar{{/aside}}" role="main">
+        {{#main}}
+          <h2 class="page-title">{{title}}</h2>
+          <div class="maintext {{class}}">{{{html}}}</div>
+        {{/main}}
+        </main>
+        {{#aside}}
+        <aside role="complementary">
+          <h3>{{title}}</h3>
+          <div class="content">{{{html}}}</div>          
+        </aside>
+        {{/aside}}
+      {{/content}}
+    </div>
+  </div>
+  {{>footer}}
+  {{{closure}}}
+</body>
+</html>

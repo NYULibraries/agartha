@@ -1,0 +1,42 @@
+#about .flex-container {
+  margin-left: 0;
+}
+.flex-container {
+
+  main.hasSidebar {
+    @media (min-width: $screen-md-min) {
+      -ms-flex: 2 0 0;
+      -webkit-flex: 2 0 0;
+      flex: 2 0 0;
+      padding-right: 70px;
+    }
+  }
+  [role=complementary] {
+    background-color: $aside-bg;
+    padding: 0px;
+    margin-bottom: 2em;
+    margin-top: 2.83em;
+    width: 100%;
+    @media (min-width: $screen-md-min) {
+      -ms-flex: 0 1 32%;
+      -webkit-flex: 0 1 32%;
+      flex: 0 1 32%;
+    }
+    h3 {
+      margin: 0;
+      padding: 5px;
+      background-color: #cec5bc;
+      text-transform: uppercase;
+      color: #555;
+      font-size: .9em;
+      a {
+        color: #555;
+      }
+    }
+    .content {
+      padding: 8px;
+      font-size: .9em;
+    }
+  }
+  
+}

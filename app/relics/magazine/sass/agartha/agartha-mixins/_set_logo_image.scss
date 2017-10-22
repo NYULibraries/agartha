@@ -1,0 +1,12 @@
+@mixin set-logo-image($logo-path: "") {
+    @if $logo-path=="" {
+        text-indent: 0;
+    }
+    @else {
+        text-indent: -1000em;
+        background-image: image-background-url($logo-path);
+        background-repeat: no-repeat;
+        background-position: left center;
+        background-size: contain;
+    }
+}

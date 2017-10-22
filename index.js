@@ -33,8 +33,6 @@ const agartha = (function () {
     // https://github.com/adam-lynch/graceful-ncp
     // https://github.com/AvianFlu/ncp
     let copy = require('ncp').ncp
-    
-
     copy.limit = 16
 
     /**
@@ -70,6 +68,19 @@ const agartha = (function () {
         })
       })
     }
+
+    function discovery () {
+      // https://www.npmjs.com/package/solr-node
+      const Discover = require('solr-node')
+      const client = new Discover({
+        host: 'stagediscovery.dlib.nyu.edu',
+        port: '8983',
+        core: 'viewer',
+        protocol: 'http'
+      })
+      return client     
+    }
+
 
     /**
      * echo str > path.
@@ -175,30 +186,39 @@ const agartha = (function () {
     }
 
     function get (option) {
-      let project = agartha.read.json(agartha.path.join(process.cwd(), 'project.json'))
-      const environment = agartha.read.json(agartha.path.join(process.cwd(), 'env.json'))
-      const AGARTHA_ENVIRONMENT = process.env.AGARTHA_ENVIRONMENT ? process.env.AGARTHA_ENVIRONMENT : 'default'
-      try {
-        // check for operational errors
-        // https://www.joyent.com/node-js/production/design/errors#operational-errors-vs-programmer-errors
-        const datasource = environment[AGARTHA_ENVIRONMENT]
-        if (agartha._.isUndefined(datasource)) {
+      const jsonSource = agartha.path.join(process.cwd(), 'project.json')
+      const jsonEnvironment = agartha.path.join(process.cwd(), 'env.json')
+      if (exists(jsonSource)) {
+        let project = agartha.read.json(jsonSource)
+        if (exists(jsonEnvironment)) {
+          const environment = agartha.read.json(jsonEnvironment)
+          const AGARTHA_ENVIRONMENT = process.env.AGARTHA_ENVIRONMENT ? process.env.AGARTHA_ENVIRONMENT : 'default'
+          try {
+            // check for operational errors
+            // https://www.joyent.com/node-js/production/design/errors#operational-errors-vs-programmer-errors
+            const datasource = environment[AGARTHA_ENVIRONMENT]
+            if (agartha._.isUndefined(datasource)) {
+              throw new Error('Unable to read datasource')
+            }
+            project.datasource = datasource
+          }
+          catch (e) {
+            agartha.exit(e)
+          }
+          if (agartha._.isUndefined(option)) {
+            return project
+          }
+          else {
+            if (agartha._.has(project, option)) {
+              return project[option]
+            }
+          }
+        }
+        else {
           throw new Error('Unable to read env.json')
         }
-        project.datasource = datasource
       }
-      catch (e) {
-        agartha.exit(e)
-      }
-
-      if (agartha._.isUndefined(option)) {
-        return project
-      }
-      else {
-        if (agartha._.has(project, option)) {
-          return project[option]
-        }
-      }
+      return false
     }
 
     function exit (error) {
@@ -222,6 +242,10 @@ const agartha = (function () {
 
     function relic () {
       return get('relic')
+    }
+
+    function relicDir () {
+      return path.join(cwd(), 'app/relics', get('relic'), 'commands')
     }
 
     function appUrl () {
@@ -367,6 +391,8 @@ const agartha = (function () {
       fs: fs,
       canWrite: canWrite,
       rimraf: rimraf,
+      relicDir: relicDir,
+      discovery: discovery,
       get: get
     }
   }

@@ -1,0 +1,35 @@
+{
+  "id" : "home",
+  "title": "NYU Libraries",
+  "route": "/index.html",
+  "menu": [
+    {
+      "context": "navbar",
+      "label": "Home",
+      "weight": 0
+    }
+  ],
+  "content": {
+    "intro" : {
+      "id" : "intro",
+      "title": "Project title",
+      "localsource": "intro.content.html"
+    },
+    "aside": {
+      "newsitem" : {
+        "id": "newsitem",
+        "title": "Section label",
+        "publisher": "Publisher",
+        "subject": [
+          "Subject 1",
+          "Subject 2"
+        ]
+      }
+    }
+  },
+  "assets" : {  
+    "js" : [
+      "front.js"
+    ]
+  }
+}

@@ -1,0 +1,179 @@
+* {
+    @include box-sizing(border-box);
+}
+
+*:before,
+*:after {
+    @include box-sizing(border-box);
+}
+
+html {
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+}
+
+body {
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    font-family: $font-family-sans-serif;
+    color: $text-color;
+    background-color: $body-bg;
+}
+
+// Links
+a {
+    color: $link-color;
+    text-decoration: none;
+    &:hover,
+    &:focus {
+        color: $link-hover-color;
+        text-decoration: underline;
+    }
+}
+
+.container-fluid {
+    @include container-fluid();
+}
+
+.thumbs-grid .item {
+    padding-top: 20px;
+}
+
+.item {
+    @media (max-width: $screen-md-min) {
+        min-width: 230px !important;
+    }
+}
+
+
+
+.newsitem {
+    padding: 6px;
+    margin: 0;
+    font-size: .75rem;
+    background-color: $accent-bg;
+    .meta {
+        background-color: $aside-bg;
+        border-radius: 3px;
+        height: 100%;
+    }
+    .md_label {
+        font-size: .7rem;
+    }
+    h1 {
+        display: none;
+    }
+    h4 {
+        margin: 0;
+        margin-top: -10px;
+        a:link,
+        a:visited {
+            color: #d30b0b;
+            font-weight: bold;
+        }
+    }
+}
+
+.item-list {
+    margin-top: 30px;
+}
+
+main {
+    padding: 2.5em 0 2em;
+    @media (min-width: $grid-float-breakpoint) {
+        padding: 45px 0 4em;
+    }
+    a:link,
+    a:focus {
+        font-weight: bold;
+    }
+    ul {
+        margin: 1rem 0;
+        padding: 0;
+        list-style-position: inside;
+    }
+    li {
+        padding-left: .1rem;
+        padding-right: .1rem;
+    }
+    p {
+        margin: 1rem 0;
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+    h2.page-title {
+        font-size: 1.5rem;
+        font-weight: 300;
+        text-shadow: 0px 0px 1px white;
+        margin-top: 0;
+        @media (min-width: $grid-float-breakpoint) {
+            font-size: 2rem;
+        }
+    }
+    h3 {
+        font-size: 1.3rem;
+        font-weight: 400;
+        margin: 2.5rem 0 .5rem;
+        text-shadow: 0px 0px 1px white;
+    }
+}
+
+body.page .maintext {
+    max-width: 53rem;
+}
+
+body#book {
+    overflow-y: hidden;
+    .navbar {
+        margin-bottom: 0;
+    }
+    .container-fluid {
+        max-width: none;
+    }
+    #book {
+        border: none;
+    }
+}
+
+.resultsnum {
+    font-size: 1em;
+    color: #666;
+    margin-right: 20px;
+    float: left;
+    .s-query {
+        font-weight: bold;
+        color: #222;
+    }
+}
+
+
+
+
+/** Elements that are not meant to be seen until io its loading */
+
+.io-loading {
+    .resultsnum,
+    #browse-select,
+    .filters,
+    .pagination,
+    .footer-wrapper {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px 1px 1px 1px);
+    }
+}
+
+.widget {
+    &.book {
+        width: 100%;
+        opacity: 0;
+    }
+}
+
+.hiddenSiblings {
+    display: none;
+    visibility: hidden;
+}

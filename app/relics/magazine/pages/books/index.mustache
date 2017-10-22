@@ -1,0 +1,12 @@
+<!doctype html>
+<html class="nojs">
+<head>{{>head}}</head>
+<body id="{{id}}" data-app="{{appUrl}}" data-appRoot="{{appRoot}}">
+  {{>header}}
+  {{#content}}
+    <iframe class="widget book" id="book" name="book" data-name="book" data-sourceUrl="{{viewer}}" allowfullscreen mozallowfullscreen webkitallowfullscreen></iframe>
+  {{/content}}
+  {{>bubbling}}
+  {{{closure}}}
+</body>
+</html>

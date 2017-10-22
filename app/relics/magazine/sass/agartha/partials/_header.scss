@@ -1,0 +1,82 @@
+.header-wrapper {
+    background-color: $header-bg;
+    @include box-shadow(rgba(102, 102, 102, 0.3) 1px 1px 1px);
+    color: #fff;
+    width: 100%;
+    overflow: auto;
+    position: relative;
+    z-index: 10;
+}
+
+.header-main {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    width: 100%;
+    margin-right: 15px;
+    @media (max-width: $grid-float-breakpoint) {
+        padding: 10px 0 10px;
+    }
+    .toplogo {
+        float: right;
+        a {
+            text-indent: -1000em;
+            background: image-background-url("nyulibraries-logo-black.svg") no-repeat right center;
+            background-size: contain;
+            max-width: 300px;
+            width: 22vw;
+            display: block;
+            height: 40px;
+        }
+        @media (max-width: $screen-xs-max) {
+            display: none;
+        
+            a {
+                height: 40px;
+                background-position: left center;
+                width: 30vw;
+            }
+        }
+        @media (max-width: 479px) {
+            display: none;
+        }
+    }
+    .sitename {
+        float: left;
+        margin: 0;
+        line-height: 1;
+        a {
+            // 
+            width: 40vw;
+            max-width: 550px;
+            height: 40px;
+            line-height: 1;
+            display: block;
+            color: $siteheader-color;
+            @include set-logo-image($logo-path);
+            @media (max-width: $grid-float-breakpoint) {
+
+                height: 40px;
+                background-position: left center;
+            }
+            @media (max-width: 479px) {
+                // background-size: contain;
+                padding-top: 0;
+                height: 40px;
+            }
+        }
+        a:hover {
+            text-decoration: none; // text-shadow: 1px 0px 0px #FF9C00, -1px 0px 0px #FF9C00, 0px 1px 0px #FF9C00, 0px -1px 0px #FF9C00;
+            text-shadow: 0px 0px 1px #fff, 1px 0px 0px #FF9C00;
+        }
+    }
+}
+
+.header-main {
+    svg {
+        display: none;
+        width: 300px;
+        path {
+            fill: orange;
+        }
+    }
+}

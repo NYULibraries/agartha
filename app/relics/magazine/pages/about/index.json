@@ -1,0 +1,23 @@
+{
+  "id" : "about",
+  "title" : "About",
+  "route" : "/about/index.html",
+  "menu": [
+    {
+      "context": "navbar",
+      "label": "About",
+      "weight": 1
+    }
+  ],
+  "content" : {
+    "main": {
+      "title" : "About",
+      "localsource": "content.main.html"
+    }
+  },
+  "assets" : {
+    "js" : [
+      "commons.js"
+    ]
+  }
+}

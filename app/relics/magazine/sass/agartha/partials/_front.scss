@@ -1,0 +1,35 @@
+.home {
+    main {
+        min-height: 1000px;
+    }
+}
+
+.topHold .intro {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    font-weight: 300;
+    @media (min-width: $screen-md-min) {
+        font-size: 1.4rem;
+        line-height: 1.5;
+    }
+    a:link,
+    a:visited {
+        font-weight: 400;
+    }
+    b {
+        font-weight: 400;
+    }
+}
+
+.line2 {
+    margin: 0;
+    font-size: 1.1rem;
+    @media (min-width: $screen-md-min) {
+        font-size: 1.3rem;
+    }
+}
+
+.readmore {
+    font-size: .8em;
+    display: inline-block;
+}

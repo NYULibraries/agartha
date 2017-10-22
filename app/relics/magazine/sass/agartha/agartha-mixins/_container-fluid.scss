@@ -1,0 +1,9 @@
+@mixin container-fluid() {
+  width: 100%;
+  max-width: 1400px;
+  padding-left: 4vw;
+  padding-right: 4vw;
+  margin: 0px auto;
+  overflow: hidden;
+  max-width: 1400px;
+}

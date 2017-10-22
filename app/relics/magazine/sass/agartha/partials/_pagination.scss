@@ -1,0 +1,25 @@
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 1em auto;
+  width: auto;
+  .yui3-paginator-first, .yui3-paginator-next, .yui3-paginator-page {
+    display: inline-block;
+    padding: 5px;
+    padding: 6px 12px;
+    line-height: 1.42857;
+    text-decoration: none;
+    color: darken($brand-secondary-bright, 4%);
+    &:hover {
+      background-color: gold;
+    }
+  }
+  .yui3-paginator-current-page {
+    color: #fff;
+    background-color: $brand-secondary-bright;
+    cursor: default;
+    &:hover {
+      background-color: darken($brand-secondary-bright, 2%);
+    }
+  }
+}

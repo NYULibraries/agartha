@@ -1,0 +1,77 @@
+//
+//   Fight against War and Fascism
+//
+nav.navbar,
+.navbar-header {
+    display: none;
+}
+
+.item .thumbs img {
+    width: 100%;
+}
+
+.item .card {
+    background-color: $card-bg;
+}
+
+.header-main {
+     @media (max-width: $screen-md-min) {
+        padding-top: 15px;
+        padding-bottom: 5px;
+    }
+    @media (max-width: $screen-sm-min) {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .sitename a {
+        text-indent: 0;
+        text-transform: uppercase;
+        max-width: none;
+        width: auto;
+        font-size: 2rem;
+        text-shadow: 1px 1px 1px #fff, -1px -1px 1px #fff;
+        &:hover {
+            text-decoration: none;
+            text-shadow: 1px 1px 1px #fff, -1px -1px 1px #fff;
+        }
+        @media (max-width: $screen-md-min) {
+            font-size: 1.7rem;
+        }
+
+        @media (max-width: $screen-sm-min) {
+            height: auto;
+            font-size: 1.5rem;
+        }
+    }
+
+    .toplogo {
+        max-width: 25%;
+        padding-left: 2.3vw; // here, fractional padding compensates for the negative margin elsewhere
+        width: 25%;
+        a {
+            background: image-background-url("nyulibraries-logo-purple.svg") no-repeat left top;
+            background-size: contain;
+            max-width: 100%;
+            width: 100%;
+        }
+        @media (max-width: $screen-sm-max) {
+            display: block;
+
+            padding-left: 50px;
+            max-width: none;
+            width: auto;
+            a {
+                height: 40px; //background-position: left center;
+                width: 200px;
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .topHold .intro {
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+}

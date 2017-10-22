@@ -1,0 +1,114 @@
+input[type="submit"] {
+  background: #ecdcc8 image-background-url("search-icon-2x.png") no-repeat center center;
+  background-size: auto 80%;
+  text-indent: -1000em;
+  border: 1px solid $brand-secondary3;
+  -ms-flex: 0 1 50px;
+  -webkit-flex: 0 1 50px;
+  flex: 0 1 50px;
+  height: 35px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -khtml-border-radius: 0px;
+  border-radius: 0px;
+  &:focus {
+    z-index: 1000;
+    outline-style: none;
+    outline-width: 0px;
+    background-color: darken(#ecdcc8, 8%);
+  }
+}
+
+input[type="text"] {
+  padding: 0 10px;
+  border: 1px solid $brand-secondary3;
+  height: 35px;
+  @include box-shadow(inset 0px 1px 1px rgba(0, 0, 0, 0.2));
+  -ms-flex: 1 1 auto;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -khtml-border-radius: 0px;
+  border-radius: 0px;
+  &:focus {
+    z-index: 1000;
+  }
+}
+
+[role="search"] {
+  margin: 0 15px;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -ms-flex-wrap: wrap;
+  @media (min-width: $grid-float-breakpoint) {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+.filters {
+  float: right;
+}
+
+input:focus {
+  outline: #FDAA29 auto 5px;
+  outline-color: #FDAA29;
+  outline-style: auto;
+  outline-width: 5px;
+}
+
+.resultsnum {
+  font-size: 1em;
+  color: #666;
+  float: left;
+  margin-right: 20px;
+  .s-query,
+  .start,
+  .docslength,
+  .numfound {
+    font-weight: bold;
+  }
+}
+
+.items-no-results {
+  .resultsnum,
+  #browse-select,
+  .filters {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+  }
+}
+
+// Navbar form
+.navbar-form {
+  margin-left: -$navbar-padding-horizontal;
+  margin-right: -$navbar-padding-horizontal;
+  padding: 10px $navbar-padding-horizontal;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  $shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
+  @include box-shadow($shadow);
+  // Vertically center in expanded, horizontal navbar
+  @include navbar-vertical-align($input-height-base);
+  // Undo 100% width for pull classes
+  @media (min-width: $grid-float-breakpoint) {
+    width: 32%;
+    border: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    @include box-shadow(none);
+    // Outdent the form if last child to line up with content down the page
+    &.navbar-right:last-child {
+      margin-right: -$navbar-padding-horizontal;
+    }
+  }
+}

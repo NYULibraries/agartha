@@ -1,0 +1,13 @@
+{
+  "id": "book",
+  "title": "Book",
+  "route": "/books/index.html",
+  "content" : {},
+  "assets" : {
+    "js" : [
+      "commons.js",
+      "crossframe.js",
+      "books.js"
+    ]
+  }
+}

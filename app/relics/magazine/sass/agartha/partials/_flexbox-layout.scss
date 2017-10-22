@@ -1,0 +1,86 @@
+.topHold.flex-container {
+    flex-wrap: nowrap;
+    @media (max-width: $grid-float-breakpoint-max) {
+        flex-wrap: wrap;
+    }
+    .item {
+        @media (max-width: $grid-float-breakpoint-max) {
+            // padding: 0 0;
+            flex: none;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+    }
+}
+
+.flex-container {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -ms-flex-wrap: wrap;
+    -webkit-flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    margin-top: 0px;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -ms-flex-pack: justify;
+    margin-left: -3vw;
+    .item {
+        -ms-flex: 1 0 25%;
+        -webkit-flex: 1 0 25%;
+        flex: 1 0 25%;
+        .newsitem {
+            margin-left: 3vw;
+        }
+        .card {
+            /* wrapper and inner padding to respect an IE 10 flexbox / box-sizing bug */
+            margin-left: 3vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    }
+    .item:empty,
+    .card:empty {
+        height: 0;
+        border: none;
+        padding: 0;
+        box-shadow: none;
+        margin: 0;
+    }
+
+    .itemdouble {
+        margin: 0rem 0px 30px 0;
+        padding-left: 3vw;
+        @media (min-width: $grid-float-breakpoint) {
+            flex: 0 1 75%;
+        }
+        @media (min-width: $screen-md-min) {
+            margin: 0rem 0px 0rem 0;
+            padding-right: 50px;
+        }
+        @media (max-width: $screen-md-max) {
+            flex: 0 1 66.666%;
+        }
+        @media (max-width: $screen-xs-max) {
+            flex: none;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+    }
+    .itemwidth2 {
+        padding-left: 3vw;
+        /* mobile and smaller */
+        @media (max-width: $screen-xs-max) {
+            flex: none;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        /* full size */
+        @media (min-width: $screen-sm-min) {
+            flex: 0 1 50%;
+        }
+    }
+}

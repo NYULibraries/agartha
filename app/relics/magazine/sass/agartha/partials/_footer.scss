@@ -1,0 +1,89 @@
+.footer-wrapper {
+    background-color: $footer-color;
+    border-top: 1px solid darken($footer-color, 4%);
+}
+
+.footer-main {
+    margin: 0px auto;
+    padding-top: 15px;
+    padding-bottom: 15px; // clear internal floats
+    width: 100%;
+    overflow: hidden;
+    .partner-wrapper {
+        text-align: center;
+
+        a {
+            display: block;
+            color: $footer-link-color;
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 1px;
+            font-size: 11px;
+            @media (min-width: $grid-float-breakpoint) {
+                font-size: 13px;
+            }
+            &:hover {
+                color: $footer-link-color-hover;
+                text-decoration: underline;
+            }
+        }
+    }
+    .logo {
+        margin-bottom: 10px;
+        @media (min-width: $grid-float-breakpoint) {
+            float: left;
+            margin-bottom: 0px;
+        }
+        text-align: center;
+        line-height: 1;
+        width: auto;
+        height: 41px;
+        a {
+            display: block;
+            width: auto;
+            height: 100%;
+        }
+    }
+}
+
+// sticky footer for full-width, for search and browse pages
+main {
+    min-height: 400px;
+}
+
+@media (min-width: $grid-float-breakpoint) {
+    html {
+        position: relative;
+        min-height: 100%;
+    }
+    body {
+        margin-bottom: $footer-height;
+    }
+    body.book {
+        margin-bottom: 0px;
+    }
+    .footer-wrapper {
+        position: absolute;
+        bottom: 0;
+        height: $footer-height;
+        width: 100%;
+    }
+}
+
+// end sticky footer
+.footer-nav {
+    font-size: .85rem;
+    margin: 0 auto 7px;
+    text-align: center;
+    span {
+        display: inline-block;
+        margin-right: 20px;
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+.io-loading .footer-wrapper {
+    display: none;
+}

@@ -1,0 +1,16 @@
+{
+  "header" : {
+    "url" : "http://library.nyu.edu/",
+    "label" : "NYU Libraries",
+    "class" : "nyullogo",
+    "target" : "_blank"
+  },
+  "partners" : [
+    {
+      "id" : "example",
+      "url" : "https://example.com",
+      "label" : "Example"
+    }
+  ]
+}
+

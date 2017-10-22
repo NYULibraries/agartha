@@ -1,0 +1,65 @@
+<!doctype html>
+<html class="nojs">
+<head>{{>head}}</head>
+<body id="{{id}}" class="{{id}}">
+  {{>header}}
+  <main class="main container-fluid" role="main">
+  {{#content}}
+  <div class="topHold flex-container">
+    {{#intro}}
+      <div class="intro {{class}} itemdouble">{{{html}}}</div>
+    {{/intro}}
+    {{#aside}}
+    <aside class="item">
+      {{#newsitem}}
+      <div class="{{id}}">
+        <div class="meta">
+          <h1 class="md_title">{{title}}</h1>
+          <div>
+            <span class="md_label">Publisher:</span> <span>{{publisher}}</span>
+          </div>
+          <div class="md_subjects">
+            <span class="md_label">Subject:</span> 
+            {{#subject}}
+              <span class="subject">{{.}}</span>
+            {{/subject}}
+          </div>
+        </div>
+      </div>
+      {{/newsitem}}
+    </aside>
+    {{/aside}}
+  </div>
+  
+  <div id="app">
+  <div 
+    v-infinite-scroll="loadMore" 
+    infinite-scroll-disabled="busy" 
+    infinite-scroll-distance="10">
+  </div>
+  </div>
+
+  {{#featured}}
+  <div class="item-list flex-container thumbs-grid">
+    {{#docs}}
+      <article class="item" {{#if score}}data-score="{{{score}}}" {{/if}}>
+        <div class="card">
+          <div class="thumbs">  
+            <img class="imgload" id="img-{{ss_book_identifier}}" data-src="{{thumbnail}}" title="{{ss_title_long}}"/>
+          </div>
+          <div class="meta">
+            <h1 class="md_title"><a href="{{url}}">{{ss_title_long}}</a></h1>
+          </div>
+        </div>
+      </article>
+    {{/docs}}
+    <article class="item"></article>
+    <article class="item"></article>
+    <article class="item"></article>
+  </div>
+  {{/featured}}
+  {{/content}}
+  </main>
+  {{>footer}} 
+  {{{closure}}}
+</body>
