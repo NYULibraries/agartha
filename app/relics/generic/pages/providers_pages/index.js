@@ -3,6 +3,8 @@ function providers_pages (data) {
   'use strict';
 
   const agartha = require('agartha').agartha;
+  
+  const _ = agartha._;
 
   const collectionCode = agartha.get('collectionCode');
 
@@ -11,11 +13,23 @@ function providers_pages (data) {
   const discovery = datasource.discovery.url;
 
   const viewer = datasource.viewer.url;
+  
+  const field = 'sm_provider_label';
 
-  const partner_label_url = discovery + '?wt=json&fq=sm_collection_code:<%=collectionCode%>&rows=0&facet=true&facet.field=sm_provider_label';
+  const template_partner_label_url = '<%= discovery %>?wt=json&fq=sm_collection_code:<%= collectionCode %>&rows=0&facet=true&facet.field=<%= field %>';
+  
+  var compiled_partner_label_url = _.template(template_partner_label_url);
+  
+  const partner_label_url = compiled_partner_label_url(
+    { 
+      discovery: discovery,
+      collectionCode: collectionCode,
+      field: field
+    }
+  );
 
   const partner_url = viewer + '/sources/field/field_partner';
-
+  
   var terms = [];
 
   data.content.items.datasource = discovery;
@@ -58,7 +72,7 @@ function providers_pages (data) {
       });
     });
   });
-
 }
 
 exports.providers_pages = providers_pages;
+
